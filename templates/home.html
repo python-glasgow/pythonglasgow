@@ -63,6 +63,18 @@
 	
 	<div class="prepend-top prepend-1 span-22 last">
 		
+		<h4>Recent Tweets</h4>
+		
+		<ul>
+		{% for tweet in tweets %}
+			<li>{{ tweet.text }}</li>
+		{% endfor %}
+		</ul>
+		
+	</div>
+	
+	<div class="prepend-top prepend-1 span-22 last">
+		
 		Poswered by <a href="http://flask.pocoo.org/">Flask</a>, running on 
 		Google App Engine. Code on <a href="http://github.com/d0ugal/pythonedinburgh">
 		GitHub</a>.
