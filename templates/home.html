@@ -60,14 +60,13 @@
 		
 	</div>
 	
-	
 	<div class="prepend-top prepend-1 span-22 last">
 		
 		<h4>Recent Tweets</h4>
 		
 		<ul>
 		{% for tweet in tweets %}
-			<li>{{ tweet.text }}</li>
+			<li>{{ tweet }}</li>
 		{% endfor %}
 		</ul>
 		
