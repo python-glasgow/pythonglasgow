@@ -12,8 +12,11 @@ from flask import render_template, redirect, request
 from jinja2 import Markup
 import tweepy
 
-CONSUMER_KEY = 'consumer-key'
-ACCESS_TOKEN = 'access-token'
+CONSUMER_SECRET = 'consumer-secret-goes-here'
+ACCESS_SECRET = 'access-secret-goes-here'
+
+CONSUMER_KEY = 'gZAaDFWSVEbvGAMyPzcIg'
+ACCESS_TOKEN = '176738104-gjrD9tlAvBMc8phUWoCxi0O0qrdlfKu7wzwUItH2'
 
 app = Flask(__name__)
 
