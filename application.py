@@ -10,6 +10,7 @@ from flask import Flask
 from flask import render_template, redirect, request
 from jinja2 import Markup
 import tweepy
+import gcal
 
 app = Flask(__name__)
 
@@ -24,7 +25,8 @@ class TwitterCredentials(db.Model):
 @app.route('/')
 def home():
     return render_template('home.html',
-            tweets=get_tweets());
+            tweets=get_tweets(),
+            next_event=gcal.next_event());
 
 
 def twitterfy(tweet):

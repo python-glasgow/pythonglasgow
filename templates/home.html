@@ -9,6 +9,11 @@
 	
 	<link rel="icon" href="/media/favicon.ico" type="image/x-icon" />
 	
+	<link rel="alternate" type="application/rss+xml" title="Python Edinburgh Meetup RSS Feed"
+	   href="http://www.google.com/calendar/feeds/practicalpoetry.co.uk_sbqp5tpnm93b3bleap3mqf67jk%40group.calendar.google.com/public/basic?futureevents=true"/>
+    <link rel="alternate" type="text/calendar" title="Python Edinburgh Meetup iCal Feed"
+       href="http://www.google.com/calendar/ical/practicalpoetry.co.uk_sbqp5tpnm93b3bleap3mqf67jk%40group.calendar.google.com/public/basic.ics?futureevents=true"/>
+	
 	<!--[if lt IE 8]>
 	<link href="/media/css/blueprint/ie.css" rel="stylesheet" type="text/css" />
 	<![endif]-->
@@ -42,9 +47,19 @@
 		</p>
 		
 		<p> 
-            The next meeting is on the <strong>28th of September</strong> at 
-            <a href="http://www.bertsbar.co.uk/berts-bar/about/how-to-find-us.html">Bert's Bar</a>.
-        </p> 
+            The next meeting is a <strong>{{next_event.title}}</strong> on the
+            <strong>{{next_event.date_string()}}</strong> at
+            <a href="http://www.bertsbar.co.uk/berts-bar/about/how-to-find-us.html">Bert's Bar</a>
+            at {{next_event.time_string()}}.
+        </p>
+        
+        <p>
+            Our meetup calendar is syndicated as <a
+       href="http://www.google.com/calendar/feeds/practicalpoetry.co.uk_sbqp5tpnm93b3bleap3mqf67jk%40group.calendar.google.com/public/basic?futureevents=true">rss</a>
+            and <a
+       href="http://www.google.com/calendar/ical/practicalpoetry.co.uk_sbqp5tpnm93b3bleap3mqf67jk%40group.calendar.google.com/public/basic.ics?futureevents=true">ical</a>,
+            or you can go and have a <a href="http://www.google.com/calendar/b/0/embed?src=practicalpoetry.co.uk_sbqp5tpnm93b3bleap3mqf67jk@group.calendar.google.com&mode=AGENDA">look</a>.
+        </p>
 		
 	</div>
 	
