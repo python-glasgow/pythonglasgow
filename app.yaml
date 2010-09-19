@@ -6,11 +6,11 @@ api_version: 1
 handlers:
 - url: /media
   static_dir: media
-- url: .*
-  script: app.py
 - url: /favicon.ico
   static_files: media/favicon.ico
   upload: media/favicon.ico
 - url: /robots.txt
   static_files: media/robots.txt
   upload: media/robots.txt
+- url: .*
+  script: app.py
