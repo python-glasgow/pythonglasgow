@@ -42,7 +42,7 @@ class CalendarEvent(object):
         return time_s + ampm
 
 def next_event():
-    next_event = None #memcache.get("next-event")
+    next_event = memcache.get("next-event")
     
     if not next_event:
         # Create a Google Calendar client to talk to the Google Calendar service.
