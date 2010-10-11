@@ -45,14 +45,14 @@
 		
 		<p>
 			Python Edinburgh meets on the <strong>4th Tuesday</strong> of 
-			each month. 
+			each month. Other events such as talks and sprints will be hosted
+			less regularly.
 		</p>
 		
 		<p> 
 			The next meeting is a <strong>{{ next_event.title }}</strong> on the
-			<strong>{{ next_event.date_string() }}</strong> at
-			<a href="http://www.bertsbar.co.uk/berts-bar/about/how-to-find-us.html">
-			Bert's Bar</a> at {{ next_event.time_string() }}.
+			<strong>{{ next_event.date_string() }}</strong> in {{ next_event.where }}
+			at {{ next_event.time_string() }}.
 		</p>
 		
 		<p>

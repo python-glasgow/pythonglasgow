@@ -28,6 +28,7 @@ class CalendarEvent(object):
         whs = atom_ob.when[0].start_time
         whs = whs.split('.')[0]
         self.when = datetime.strptime(whs, '%Y-%m-%dT%H:%M:%S')
+        self.where = atom_ob.where[0].value_string
 
     def date_string(self):
         date_s = self.when.strftime("%A %d%%s of %B")
