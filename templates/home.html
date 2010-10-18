@@ -1,31 +1,7 @@
-<!DOCTYPE html> 
-<html> 
-<head> 
-	
-	<title>Python Edinburgh</title> 
-	
-	<meta name="description" content="" /> 
-	<meta name="keywords" content="" /> 
-	
-	<link rel="icon" href="/media/favicon.ico" type="image/x-icon" />
-	
-	<link rel="alternate" type="application/rss+xml" title="Python Edinburgh Meetup RSS Feed"
-	   href="http://www.google.com/calendar/feeds/practicalpoetry.co.uk_sbqp5tpnm93b3bleap3mqf67jk%40group.calendar.google.com/public/basic?futureevents=true"/>
-    <link rel="alternate" type="text/calendar" title="Python Edinburgh Meetup iCal Feed"
-       href="http://www.google.com/calendar/ical/practicalpoetry.co.uk_sbqp5tpnm93b3bleap3mqf67jk%40group.calendar.google.com/public/basic.ics?futureevents=true"/>
-	
-	<!--[if lt IE 8]>
-	<link href="/media/css/blueprint/ie.css" rel="stylesheet" type="text/css" />
-	<![endif]-->
-	
-	<link href="/media/css/blueprint/screen.css" rel="stylesheet" type="text/css" />
-	<link href="/media/css/main.css" rel="stylesheet" type="text/css" />
-	
-</head> 
-<body>
-	
-<div class="container prepend-top">
-	
+{% extends "base.html" %}
+
+{% block content %}
+
 	<div class="prepend-1 span-22 last">
 		
 		<h1>Python Edinburgh</h1>
@@ -79,7 +55,10 @@
 			<li>
 				<a href="irc://irc.freenode.net/python-edinburgh">
 				#python-edinburgh on IRC</a>
-			</li>
+            </li>
+            <li>
+                <a href="/wiki/">Read the wiki</a>
+            </li>
 		</ul>
 		
 	</div>
@@ -98,29 +77,4 @@
 	</div>
 	{% endif %}
 	
-	<div class="prepend-top prepend-1 span-22 last">
-		
-		Powered by <a href="http://flask.pocoo.org/">Flask</a>, running on 
-		Google App Engine. Code on <a href="http://github.com/d0ugal/pythonedinburgh">
-		GitHub</a>.
-		
-	</div>
-	
-</div>
-
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-17948973-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-
-</body> 
-</html>
+{% endblock %}
