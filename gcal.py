@@ -68,11 +68,12 @@ def upcoming_events():
         query.start_min = start_min.isoformat()
         query.start_max = start_max.isoformat()
 
+        # query gcal for the time interval
         events = [CalendarEvent(e)
                 for e in calendar_client.CalendarQuery(query).entry]
 
         upcoming_events = events
-    
+
         if not memcache.add("upcoming-events", upcoming_events, 60 * 60): # 60 mins.
             logging.error("Memcache event store failed.")
             
