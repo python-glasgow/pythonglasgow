@@ -22,15 +22,30 @@
 		<p>
 			Python Edinburgh meets on the <strong>4th Tuesday</strong> of 
 			each month. Other events such as talks and sprints will be hosted
-			less regularly.
-		</p>
-		
-		<p> 
-			The next meeting is a <strong>{{ next_event.title }}</strong> on the
-			<strong>{{ next_event.date_string() }}</strong> in {{ next_event.where }}
-			at {{ next_event.time_string() }}.
-		</p>
-		
+			less regularly. 
+        </p>
+        {% if upcoming_events|count == 0 %}
+        <p>
+            There are no meetings arranged for the next month.
+        </p>
+        {% elif upcoming_events|count == 1 %}
+        <p>
+            The next meeting is <strong>{{upcoming_events[0].title}}</strong> on {{upcoming_events[0].date_string()}} in {{upcoming_events[0].where}}.
+        </p>
+        {% else %}
+        <p>
+            The upcoming meetings in the next month are:
+        </p>
+        <ul>
+        {% for e in upcoming_events %}
+            <li>
+                <strong>{{e.title}}</strong> on {{e.date_string()}} in {{e.where}}
+            </li>
+
+        {% endfor %}
+        </ul>
+        {% endif %}
+
 		<p>
 			Our meetup calendar is syndicated as <a href="http://www.google.com/calendar/feeds/practicalpoetry.co.uk_sbqp5tpnm93b3bleap3mqf67jk%40group.calendar.google.com/public/basic?futureevents=true">rss</a>
 			and <a href="http://www.google.com/calendar/ical/practicalpoetry.co.uk_sbqp5tpnm93b3bleap3mqf67jk%40group.calendar.google.com/public/basic.ics?futureevents=true">ical</a>,

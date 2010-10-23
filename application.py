@@ -25,7 +25,7 @@ class TwitterCredentials(db.Model):
 def home():
     return render_template('home.html',
             tweets=get_tweets(),
-            next_event=gcal.next_event());
+            upcoming_events =gcal.upcoming_events());
 
 
 def twitterfy(tweet):
