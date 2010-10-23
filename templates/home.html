@@ -22,15 +22,18 @@
 		<p>
 			Python Edinburgh meets on the <strong>4th Tuesday</strong> of 
 			each month. Other events such as talks and sprints will be hosted
-			less regularly.
+			less regularly. Over the next month, the meetings are:
 		</p>
-		
-		<p> 
-			The next meeting is a <strong>{{ next_event.title }}</strong> on the
-			<strong>{{ next_event.date_string() }}</strong> in {{ next_event.where }}
-			at {{ next_event.time_string() }}.
-		</p>
-		
+
+        <ul>
+        {% for e in upcoming_events %}
+            <li>
+                <strong>{{e.title}}</strong> on {{e.date_string()}} in {{e.where}}
+            </li>
+
+        {% endfor %}
+        </ul>
+
 		<p>
 			Our meetup calendar is syndicated as <a href="http://www.google.com/calendar/feeds/practicalpoetry.co.uk_sbqp5tpnm93b3bleap3mqf67jk%40group.calendar.google.com/public/basic?futureevents=true">rss</a>
 			and <a href="http://www.google.com/calendar/ical/practicalpoetry.co.uk_sbqp5tpnm93b3bleap3mqf67jk%40group.calendar.google.com/public/basic.ics?futureevents=true">ical</a>,

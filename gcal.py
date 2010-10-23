@@ -1,5 +1,5 @@
-from datetime import datetime
 import logging
+import datetime
 
 from google.appengine.api import memcache
 
@@ -27,7 +27,7 @@ class CalendarEvent(object):
         self.title = atom_ob.title.text
         whs = atom_ob.when[0].start_time
         whs = whs.split('.')[0]
-        self.when = datetime.strptime(whs, '%Y-%m-%dT%H:%M:%S')
+        self.when = datetime.datetime.strptime(whs, '%Y-%m-%dT%H:%M:%S')
         self.where = atom_ob.where[0].value_string
 
     def date_string(self):
@@ -42,10 +42,10 @@ class CalendarEvent(object):
         
         return time_s + ampm
 
-def next_event():
-    next_event = memcache.get("next-event")
+def upcoming_events():
+    upcoming_events = memcache.get("upcoming-events")
     
-    if not next_event:
+    if not upcoming_events:
         # Create a Google Calendar client to talk to the Google Calendar service.
         calendar_client = gdata.calendar.service.CalendarService()
         gdata.alt.appengine.run_on_appengine(calendar_client)
@@ -55,14 +55,25 @@ def next_event():
                                                           'public', 'full')
         query.orderby='starttime'
         query.sortorder='ascending'
-        query.futureevents='true'
-        query.max_results='1'
-        
+
+        # we're interested in events in the next 30 days
+        # if we wanted all the futuer events, we'd use 
+        # query.futureevents='true'
+        # and ignore the start_min, start_max options
+        month_offset = datetime.timedelta(days=30)
+
+        start_min = datetime.datetime.now()
+        start_max = start_min + month_offset
+
+        query.start_min = start_min.isoformat()
+        query.start_max = start_max.isoformat()
+
         events = [CalendarEvent(e)
-                  for e in calendar_client.CalendarQuery(query).entry]
-        next_event = events[0]
-        
-        if not memcache.add("next-event", next_event, 60 * 60): # 60 mins.
+                for e in calendar_client.CalendarQuery(query).entry]
+
+        upcoming_events = events
+    
+        if not memcache.add("upcoming-events", upcoming_events, 60 * 60): # 60 mins.
             logging.error("Memcache event store failed.")
             
-    return next_event
+    return upcoming_events
