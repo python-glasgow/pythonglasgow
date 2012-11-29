@@ -1,8 +1,12 @@
 body{
-    padding-top: 20px;
-    padding-bottom: 40px;
-    background-image: url(/static/concrete_wall.png);
-    line-height: 1.5em;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  background-image: url(/static/concrete_wall.png);
+  line-height: 1.5em;
+}
+
+pre{
+  font-family: 'Ubuntu Mono', monospace;
 }
 
 /* Custom container */
