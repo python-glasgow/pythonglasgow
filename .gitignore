@@ -9,3 +9,4 @@ settings_local.py
 *.swp
 *.un~
 *.svn/*
+config/local.py
