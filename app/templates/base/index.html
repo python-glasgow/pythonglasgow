@@ -1,0 +1,62 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+    <p>
+      We are a user group for people interested in the Python
+      programming language in Glasgow and the west of Scotland.
+    </p>
+
+    <h3>When and Where?</h3>
+
+    <p> Python Glasgow meets on the <strong>4th Monday</strong> of each
+    month. Other events such as talks and dojos will be annouced on the
+    <a href="http://mail.python.org/mailman/listinfo/glasgow">mailing
+    list</a>.</p>
+
+    <h3>Next Event</h3>
+    {% if upcoming_events|count == 0 %}
+      <p>
+        There are no meetings arranged in the next 60 days. Send an email to
+        the <a href="http://mail.python.org/mailman/listinfo/glasgow">mailing
+        list</a> if you would like to propose or arrange an event!
+      </p>
+    {% elif upcoming_events|count == 1 %}
+      <p>
+        The next meeting is a <strong>{{upcoming_events[0].title}}
+        </strong> on {{upcoming_events[0].date_string()}} in
+        {{upcoming_events[0].where}}.
+      </p>
+    {% else %}
+
+      <p>
+        There are {{ upcoming_events|length }} events soon!
+      </p>
+
+      <ul>
+        {% for e in upcoming_events %}
+          <li>
+            <strong>{{e.title}}</strong> on {{e.date_string()}} in {{e.where}}
+          </li>
+        {% endfor %}
+      </ul>
+
+    {% endif %}
+
+    <p>
+      Our meetup calendar is syndicated as <a href="http://www.google.com/calendar/feeds/19d0eal34nt9boelm74n7p88vg@group.calendar.google.com/public/basic?futureevents=true">rss</a>
+      and <a href="https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics">ical</a>,
+      or you can go and have a <a href="https://www.google.com/calendar/embed?src=19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com&ctz=Europe/London&mode=AGENDA">look</a>.
+    </p>
+
+    {% if tweets %}
+      <h3>On Twitter</h3>
+
+      {% for tweet in tweets %}
+        <pre>{{ tweet|safe }}</pre>
+      {% endfor %}
+
+    {% endif %}
+
+
+{% endblock %}

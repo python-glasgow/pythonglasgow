@@ -1,0 +1,7 @@
+Babel==0.9.6
+Flask-Script==0.5.1
+Flask==0.9
+gevent==0.13.8
+gunicorn==0.15.0
+Jinja2==2.6
+gdata==2.0.17
