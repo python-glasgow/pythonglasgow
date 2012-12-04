@@ -3,6 +3,7 @@ from os import environ
 from logging import ERROR
 from logging.handlers import SMTPHandler
 from flask import Flask, render_template
+from flask_mail import Mail
 from werkzeug.contrib.cache import SimpleCache
 
 
@@ -14,6 +15,7 @@ app = create_app()
 app.config.from_object('config')
 
 cache = SimpleCache()
+mail = Mail(app)
 
 # For DEBUG, enable the debug toolbar and set the cach to be the NullCache.
 if app.config['DEBUG']:
@@ -28,7 +30,9 @@ try:
     credentials = (environ['SMTP_USER'], environ['SMTP_PASSWORD'])
 
     mail_handler = SMTPHandler(smtp_server, environ['SMTP_USER'],
-        app.config['ADMINS'], '[www.pythonglasgow.org] 500', credentials=credentials)
+                                app.config['ADMINS'],
+                                '[www.pythonglasgow.org] 500',
+                                credentials=credentials, secure=())
     mail_handler.setLevel(ERROR)
     app.logger.addHandler(mail_handler)
 

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 
 from gdata.calendar.service import CalendarService, CalendarEventQuery
 
@@ -25,7 +25,7 @@ class CalendarEvent(object):
         self.title = atom_ob.title.text
         whs = atom_ob.when[0].start_time
         whs = whs.split('.')[0]
-        self.when = datetime.datetime.strptime(whs, '%Y-%m-%dT%H:%M:%S')
+        self.when = datetime.strptime(whs, '%Y-%m-%dT%H:%M:%S')
         self.where = atom_ob.where[0].value_string
 
     def date_string(self):
@@ -41,7 +41,7 @@ class CalendarEvent(object):
         return time_s + ampm
 
 
-def upcoming_events():
+def upcoming_events(days=60):
 
     # Create a Google Calendar client to talk to the Google Calendar service.
     calendar_client = CalendarService()
@@ -54,9 +54,9 @@ def upcoming_events():
     # we're interested in events in the next 60 days if we wanted all the
     # futuer events, we'd use query.futureevents='true' and ignore the
     # start_min, start_max options
-    month_offset = datetime.timedelta(days=60)
+    month_offset = timedelta(days=days)
 
-    start_min = datetime.datetime.now()
+    start_min = datetime.now()
     start_max = start_min + month_offset
 
     query.start_min = start_min.isoformat()
@@ -64,3 +64,20 @@ def upcoming_events():
 
     # query gcal for the time interval
     return [CalendarEvent(e) for e in calendar_client.CalendarQuery(query).entry]
+
+
+class NoEvents(Exception):
+    pass
+
+
+def days_until_next_event():
+
+    events = upcoming_events(days=90)
+
+    if len(events) == 0:
+        raise Exception("No events planned")
+
+    event = events[0]
+    until_event = event.when - datetime.now()
+
+    return until_event.days, event

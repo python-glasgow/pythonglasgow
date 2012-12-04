@@ -1,0 +1,11 @@
+Hi All,
+
+The next Python Glasgow event will be a {{ event.title }} in {{ days }}
+days on the {{ event.date_string() }} at {{ event.where }}.
+
+There will be a printed Python logo on the table so everyone can find us.
+
+Look forward to seeing you all there!
+
+Cheers,
+Dougal

@@ -1,4 +1,5 @@
 Babel==0.9.6
+Flask-Mail==0.7.4
 Flask-Script==0.5.1
 Flask==0.9
 gdata==2.0.17

@@ -8,11 +8,11 @@ mod = Blueprint('base', __name__)
 
 
 @mod.route('/')
-@cached(timeout=60 * 10)  # 10 mins
+@cached(timeout=60 * 60)  # 60 mins
 def index():
 
     tweets = get_tweets()
-    events = cached(timeout=60 * 60)(upcoming_events)()
+    events = upcoming_events()
 
     return render_template('base/index.html',
         tweets=tweets,

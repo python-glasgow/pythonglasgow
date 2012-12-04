@@ -10,3 +10,15 @@ SECRET_KEY = environ.get('SECRET_KEY')
 SQLALCHEMY_DATABASE_URI = environ.get('HEROKU_POSTGRESQL_OLIVE_URL')
 THREADS_PER_PAGE = 8
 GCAL_ID = '19d0eal34nt9boelm74n7p88vg@group.calendar.google.com'
+
+try:
+    MAIL_SERVER = environ['SMTP_HOST']
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = environ['SMTP_USER']
+    MAIL_PASSWORD = environ['SMTP_PASSWORD']
+except KeyError as e:
+    print "MISSING MAIL SETTINGS."
+
+ADMIN_REMINDER_DAYS = 10
+LIST_REMINDER_DAYS = 7
+NOTIFICATION_EMAILS = frozenset(['glasgow@python.org'])
