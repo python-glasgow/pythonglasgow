@@ -12,16 +12,16 @@ manager = Manager(app)
 
 @manager.command
 def mailer():
-    """
+    """Send notification emails."""
 
-    Run nightmly;
+    """
+    Run nightly;
     - if its ADMIN_REMINDER_DAYS before the next event - send an
     email to ADMINS about the next event. This is to remind to book tables
     or remove the event if its there by mistake.
 
     - if its LIST_REMINDER_DAYS before the next event - send an email to the
     list to let everybody know.
-
     """
 
     try:
