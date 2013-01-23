@@ -2,8 +2,6 @@ from datetime import datetime, timedelta
 
 from gdata.calendar.service import CalendarService, CalendarEventQuery
 
-from app import app
-
 
 def _nth(num):
     """ Returns the 'th' suffix to the given num. What's that thing called?
@@ -43,6 +41,8 @@ class CalendarEvent(object):
 
 def upcoming_events(days=60):
 
+    from app import app
+
     # Create a Google Calendar client to talk to the Google Calendar service.
     calendar_client = CalendarService()
 
@@ -75,7 +75,7 @@ def days_until_next_event():
     events = upcoming_events(days=90)
 
     if len(events) == 0:
-        raise Exception("No events planned")
+        raise NoEvents("No events planned")
 
     event = events[0]
     until_event = event.when - datetime.now()
