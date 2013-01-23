@@ -34,17 +34,17 @@ def mailer():
     subject = " %s on %s in %s" % (event.title, event.date_string(), where)
 
     if days == app.config['ADMIN_REMINDER_DAYS']:
+        print "Sending Admin e-mail" % days
         to = app.config['ADMINS']
         subject = "[Python Glasgow] (Admin pre-warning) " + subject
         template = "admin-alert.txt"
     elif days == app.config['LIST_REMINDER_DAYS']:
-        to = app.config['ADMINS'] | app.config['NOTIFICATION_EMAILS']
-        print to
-        return
+        print "Sending list email"
+        to = app.config['NOTIFICATION_EMAILS']
         subject = "[Python Glasgow] " + subject
         template = "list-alert.txt"
     else:
-        print "No emails today."
+        print "No emails today. Next event in %s days" % days
         return
 
     body = render_template(template, event=event, days=days, diff=app.config['ADMIN_REMINDER_DAYS'] - app.config['LIST_REMINDER_DAYS'])
