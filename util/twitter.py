@@ -4,7 +4,7 @@ from re import compile
 
 from jinja2 import Markup
 from jinja2.utils import urlize
-from tweepy import OAuthHandler, API
+from tweepy import OAuthHandler, API, TweepError
 
 
 def twitterfy(tweet):
@@ -44,13 +44,19 @@ def get_tweets():
     auth.set_access_token(access_token, access_secret)
     api = API(auth_handler=auth)
 
-    statuses = api.user_timeline('pythonglasgow', count=5)
+    try:
+        statuses = api.user_timeline('pythonglasgow', count=5)
+    except TweepError:
+        error("Failed to read timelime.")
+        return []
+
     tweets = [twitterfy(status.text) for status in statuses]
 
     return tweets
 
 
 def update_status(text):
+
     try:
         consumer_key = environ['TWITTER_CONSUMER_KEY']
         access_token = environ['TWITTER_ACCESS_TOKEN']
@@ -60,6 +66,7 @@ def update_status(text):
         error("No Twitter credentials were found.")
         # We don't have login stuff, bail.
         return []
+
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_secret)
     api = API(auth_handler=auth)
@@ -67,6 +74,7 @@ def update_status(text):
 
 
 def send_dm(username, text):
+
     try:
         consumer_key = environ['TWITTER_CONSUMER_KEY']
         access_token = environ['TWITTER_ACCESS_TOKEN']
@@ -76,6 +84,7 @@ def send_dm(username, text):
         error("No Twitter credentials were found.")
         # We don't have login stuff, bail.
         return []
+
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_secret)
     api = API(auth_handler=auth)
