@@ -70,19 +70,19 @@ def tweeter():
 
     where = event.where.split(',')[0]
     time = event.when.time()
-    time_string = "%s:%s" % (time.hour, time.minute)
+    time_string = "%02d:%02d" % (time.hour, time.minute)
 
     if days == app.config['ADMIN_REMINDER_DAYS']:
         print "DM to d0ugal"
         send_dm("d0ugal", "Hey - we have an event coming up, have you sorted it?")
     elif days == app.config['LIST_REMINDER_DAYS']:
         print "weekly tweet"
-        update_status("The next Python Glasgow event is a {title} in %s days at {where}.".format(
-            title=event.title, where=where))
+        update_status("The next Python Glasgow event is a {title} in {days} days at {where}. See http://pythonglasgow.org/ for more details.".format(
+            title=event.title, where=where, days=days))
     elif days == 0:
         print "on the day tweet."
-        update_status("There is a {title} tonight at {time} in {where}. Who's coming?".format(
-            title=event.tite, time=time_string, where=where))
+        update_status("There is a {title} tonight at {time} in {where}. Who's coming? See http://pythonglasgow.org/ for more details.".format(
+            title=event.title, time=time_string, where=where))
     else:
         print "No Twitter updates today"
 
