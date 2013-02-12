@@ -35,7 +35,7 @@ def mailer():
     subject = " %s on %s in %s" % (event.title, event.date_string(), where)
 
     if days == app.config['ADMIN_REMINDER_DAYS']:
-        print "Sending Admin e-mail" % days
+        print "Sending Admin e-mail"
         to = app.config['ADMINS']
         subject = "[Python Glasgow] (Admin pre-warning) " + subject
         template = "admin-alert.txt"
