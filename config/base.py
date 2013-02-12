@@ -19,7 +19,7 @@ try:
 except KeyError as e:
     print "MISSING MAIL SETTINGS."
 
-ADMIN_REMINDER_DAYS = 14
+ADMIN_REMINDER_DAYS = 12
 LIST_REMINDER_DAYS = 7
 LIST_FINAL_REMINDER_DAYS = 1
 NOTIFICATION_EMAILS = frozenset(['glasgow@python.org'])
