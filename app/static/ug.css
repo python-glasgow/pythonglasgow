@@ -14,12 +14,13 @@ pre{
     margin: 0 auto;
     margin-top: 1em;
     max-width: 700px;
+    background-image: url(/static/paper_fibers.png);
 }
 
 .container{
   background-color: #fff;
   padding: 2em;
-  background-repeat: repeat-x;
+  background-repeat: repeat;
   border: 1px solid #ccc;
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;

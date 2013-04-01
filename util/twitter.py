@@ -50,7 +50,7 @@ def get_tweets():
         error("Failed to read timelime.")
         return []
 
-    tweets = [twitterfy(status.text) for status in statuses]
+    tweets = [(status, twitterfy(status.text)) for status in statuses]
 
     return tweets
 
