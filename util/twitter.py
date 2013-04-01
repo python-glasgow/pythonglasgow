@@ -88,4 +88,4 @@ def send_dm(username, text):
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_secret)
     api = API(auth_handler=auth)
-    api.update_status(screen_name=username, text=text)
+    api.send_direct_message(screen_name=username, text=text)

@@ -2,6 +2,7 @@ from flask import Blueprint, render_template
 
 from util.cache import cached
 from util.gcal import upcoming_events
+from util.github import get_members
 from util.twitter import get_tweets
 
 mod = Blueprint('base', __name__)
@@ -13,8 +14,10 @@ def index():
 
     tweets = get_tweets()
     events = upcoming_events()
+    members = get_members()
 
     return render_template('base/index.html',
+        members=members,
         tweets=tweets,
         upcoming_events=events,
     )

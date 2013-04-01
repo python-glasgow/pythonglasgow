@@ -50,11 +50,8 @@ def mailer():
 
     body = render_template(template, event=event, days=days, diff=app.config['ADMIN_REMINDER_DAYS'] - app.config['LIST_REMINDER_DAYS'])
 
-    msg = Message(subject,
-        sender="no-reply@dougalmathews.com",
-        recipients=to,
-        body=body,
-        reply_to="glasgow@python.org")
+    msg = Message(subject, sender="no-reply@dougalmathews.com", recipients=to,
+                  body=body, reply_to="glasgow@python.org")
 
     mail.send(msg)
 
@@ -77,12 +74,16 @@ def tweeter():
         send_dm("d0ugal", "Hey - we have an event coming up, have you sorted it?")
     elif days == app.config['LIST_REMINDER_DAYS']:
         print "weekly tweet"
-        update_status("The next Python Glasgow event is a {title} in {days} days at {where}. See http://pythonglasgow.org/ for more details.".format(
-            title=event.title, where=where, days=days))
+        tweet = "The next Python Glasgow event is a {title} in {days} days at {where}. See http://pythonglasgow.org/ for more details.".format(
+            title=event.title, where=where, days=days)
+        update_status(tweet)
+        send_dm("d0ugal", tweet)
     elif days == 0:
         print "on the day tweet."
-        update_status("There is a {title} tonight at {time} in {where}. Who's coming? See http://pythonglasgow.org/ for more details.".format(
-            title=event.title, time=time_string, where=where))
+        tweet = "There is a {title} tonight at {time} in {where}. See http://pythonglasgow.org/ for more details.".format(
+            title=event.title, time=time_string, where=where)
+        update_status(tweet)
+        send_dm("d0ugal", tweet)
     else:
         print "No Twitter updates today"
 

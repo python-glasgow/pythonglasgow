@@ -9,7 +9,7 @@
 
     <h3>When and Where?</h3>
 
-    <p> Python Glasgow meets on the <strong>4th Monday</strong> of each
+    <p> Python Glasgow meets on the <strong>2nd Tuesday</strong> of each
     month. Other events such as talks and dojos will be annouced on the
     <a href="http://mail.python.org/mailman/listinfo/glasgow">mailing
     list</a>.</p>
@@ -53,7 +53,17 @@
       <h3>On Twitter</h3>
 
       {% for status, formatted in tweets %}
-        <pre>{{ tweet|safe }}</pre>
+        <pre>{{ formatted|safe }} <br/><small>{{ status.created_at }}</small> </pre>
+      {% endfor %}
+
+    {% endif %}
+
+
+    {% if members %}
+      <h3>Members</h3>
+
+      {% for member in members %}
+        <a href="{{ member.html_url }}"><img  alt="{{ member.name }} ({{ member.login }})" src="{{ member.avatar_url }}" /></a>
       {% endfor %}
 
     {% endif %}
