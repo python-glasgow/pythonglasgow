@@ -1,14 +1,11 @@
 Hi All,
 
-The next Python Glasgow event will be a Dojo! This will be happening a week
-today and is kindly hosted by Twigs in their office near Charing Cross. It is
-a free but ticketed event, so if you want to come along, make sure you get
-a ticket before they run out! Currently we only have four left.
+The next Python Glasgow event will be a {{ event.title }} in {{ days }}
+days on the {{ event.date_string() }} at {{ event.where }}.
 
-To claim yours, go to: http://pythonglasgow.eventwax.com/dojo-april-2013
+There will be a printed Python logo on the table so everyone can find us.
 
-If you missed the original email or want to find out more about what happens
-at the dojo - look here: http://mail.python.org/pipermail/glasgow/2013-March/000023.html
+Look forward to seeing you all there!
 
 Cheers,
 Dougal
