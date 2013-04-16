@@ -11,4 +11,7 @@ def get_members():
         raise StopIteration
 
     for member in members:
-        yield get(member['url']).json()
+        try:
+            yield get(member['url']).json()
+        except TypeError:
+            continue
