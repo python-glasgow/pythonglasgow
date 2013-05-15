@@ -1,3 +1,5 @@
+from random import shuffle
+
 from flask import Blueprint, render_template
 
 from util.cache import cached
@@ -14,7 +16,8 @@ def index():
 
     tweets = get_tweets()
     events = upcoming_events()
-    members = get_members()
+    members = list(get_members())
+    shuffle(members)
 
     return render_template('base/index.html',
         members=members,

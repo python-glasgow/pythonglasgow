@@ -1,0 +1,17 @@
+Hi All,
+
+The next Python Glasgow event will be a {{ event.title }}! In {{ days }}
+days on the {{ event.date_string() }} at {{ event.where }}.
+
+It is a free but ticketed event, so if you want to come along, make sure you
+get a ticket before they run out!
+
+{% if event.metadata['link'] %}
+To claim yours, go to: {{ event.metadata['link'] }}
+{% endif %}
+
+If you missed the original email or want to find out more about what happens
+at the dojo - look here: http://mail.python.org/pipermail/glasgow/2013-March/000023.html
+
+Cheers,
+Dougal

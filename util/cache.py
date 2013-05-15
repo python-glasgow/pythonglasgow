@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import request
-from app import cache
+from ug import cache
 
 
 def cached(timeout=5 * 60, key='view/%s?%s'):

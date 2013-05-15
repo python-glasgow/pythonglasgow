@@ -6,6 +6,7 @@ def get_members():
     try:
         members = get("https://api.github.com/orgs/python-glasgow/members").json()
         if 'message' in members and members['message'].startswith("API Rate Limit Exceeded"):
+            print "GITHUB RATE LIMIT."
             raise StopIteration
     except ConnectionError:
         raise StopIteration

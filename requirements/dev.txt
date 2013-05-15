@@ -3,3 +3,4 @@ flask-debugtoolbar
 nose
 unittest2
 mock
+coverage

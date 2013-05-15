@@ -8,8 +8,8 @@ from werkzeug.contrib.cache import SimpleCache
 
 
 def create_app():
-    return Flask("pythonglasgow", template_folder='app/templates',
-        static_folder='app/static')
+    return Flask("pythonglasgow", template_folder='ug/templates',
+        static_folder='ug/static')
 
 app = create_app()
 app.config.from_object('config')
@@ -49,5 +49,5 @@ def not_found(error):
 def server_error(error):
     return render_template('500.html'), 404
 
-from app import views
+from ug import views
 app.register_blueprint(views.mod)
