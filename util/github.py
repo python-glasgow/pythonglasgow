@@ -14,5 +14,5 @@ def get_members():
     for member in members:
         try:
             yield get(member['url']).json()
-        except TypeError:
+        except (ValueError, TypeError):
             continue
