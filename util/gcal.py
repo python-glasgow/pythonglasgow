@@ -84,8 +84,15 @@ def upcoming_events(days=90):
     query.start_min = start_min.isoformat()
     query.start_max = start_max.isoformat()
 
+    events = []
+
     # query gcal for the time interval
-    return [CalendarEvent(e) for e in calendar_client.CalendarQuery(query).entry]
+    for e in calendar_client.CalendarQuery(query).entry:
+        if e.title.text == 'Pub Meetup' and e.recurrence is None:
+            continue
+        events.append(CalendarEvent(e))
+
+    return events
 
 
 class NoEvents(Exception):
