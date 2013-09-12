@@ -11,7 +11,7 @@ Setup Instructions
 
 To setup and start the website locally, use the following commands. This
 assumes you are using virtualenv wrapper, if you need other help then
-get in touch with @d0ugal::
+get in touch with @d0ugal ::
 
     mkvirtualenv pythonglasgow
     pip install -r requirements/dev.txt
