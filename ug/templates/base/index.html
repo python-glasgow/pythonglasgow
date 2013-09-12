@@ -69,18 +69,18 @@
 
     <p>
         <a href="http://www.oreilly.com/">
-            <img src="/static/ug_program_member.gif" alt="oreilly user group program member" />
+            <img src="{{ url_for('static', filename='ug_program_member.gif') }}" alt="oreilly user group program member" />
         </a>
     </p>
 
-      <h3>On Twitter</h3>
-      <div class="row-fluid">
+    <h3>On Twitter</h3>
+    <div class="row-fluid">
 
-        {% for status, formatted in tweets %}
-          <pre class="tweet"><p>{{ formatted|safe }} <br/><small>{{ status.created_at }}</small> </p></pre>
-        {% endfor %}
+      {% for status, formatted in tweets %}
+        <pre class="tweet"><p>{{ formatted|safe }} <br/><small>{{ status.created_at }}</small> </p></pre>
+      {% endfor %}
 
-      </div>
+    </div>
 
 
 {% endblock %}
