@@ -2,8 +2,9 @@ from os import environ
 
 from logging import ERROR
 from logging.handlers import SMTPHandler
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_mail import Mail
+from raven.contrib.flask import Sentry
 from werkzeug.contrib.cache import SimpleCache
 
 
@@ -13,6 +14,12 @@ def create_app():
 
 app = create_app()
 app.config.from_object('config')
+
+try:
+    sentry = Sentry(app, dsn=environ['SENTRY_DSN'])
+except KeyError:
+    sentry = None
+    print "MISSING SENTRY_DSN"
 
 cache = SimpleCache()
 mail = Mail(app)
@@ -42,6 +49,8 @@ except KeyError as e:
 
 @app.errorhandler(404)
 def not_found(error):
+    if sentry:
+        sentry.captureMessage("404: %s" % request.url)
     return render_template('404.html'), 404
 
 
