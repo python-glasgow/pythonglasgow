@@ -7,10 +7,12 @@ from flask_mail import Mail
 from raven.contrib.flask import Sentry
 from werkzeug.contrib.cache import SimpleCache
 
+__version__ = '1.0'
+
 
 def create_app():
     return Flask("pythonglasgow", template_folder='ug/templates',
-        static_folder='ug/static')
+                 static_folder='ug/static')
 
 app = create_app()
 app.config.from_object('ug.config')
@@ -37,9 +39,9 @@ try:
     credentials = (environ['SMTP_USER'], environ['SMTP_PASSWORD'])
 
     mail_handler = SMTPHandler(smtp_server, environ['SMTP_USER'],
-                                app.config['ADMINS'],
-                                '[www.pythonglasgow.org] 500',
-                                credentials=credentials, secure=())
+                               app.config['ADMINS'],
+                               '[www.pythonglasgow.org] 500',
+                               credentials=credentials, secure=())
     mail_handler.setLevel(ERROR)
     app.logger.addHandler(mail_handler)
 

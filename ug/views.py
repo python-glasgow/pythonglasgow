@@ -19,7 +19,8 @@ def index():
     members = list(get_members())
     shuffle(members)
 
-    return render_template('base/index.html',
+    return render_template(
+        'base/index.html',
         members=members,
         tweets=tweets,
         upcoming_events=events,

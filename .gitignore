@@ -9,3 +9,5 @@ settings_local.py
 *.swp
 *.un~
 .coverage
+.tox
+*.egg-info

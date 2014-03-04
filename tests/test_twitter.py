@@ -116,8 +116,9 @@ class TwitterTestCase(TestCase):
         tweet_events()
 
         mock_dm.assert_called_once_with(
-            'd0ugal', ('The next Python Glasgow event is a Pub meetup in 7 '
-            'days at Name. See http://pythonglasgow.org/ for more details.'))
+            'd0ugal',
+            ('The next Python Glasgow event is a Pub meetup in 7 '
+             'days at Name. See http://pythonglasgow.org/ for more details.'))
 
         mock_update.assert_called_once_with(
             'The next Python Glasgow event is a Pub meetup in 7 '

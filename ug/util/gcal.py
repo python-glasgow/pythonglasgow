@@ -89,7 +89,8 @@ def upcoming_events(days=90):
     query.start_max = start_max.isoformat()
 
     # query gcal for the time interval
-    return [CalendarEvent(e) for e in calendar_client.CalendarQuery(query).entry]
+    return [CalendarEvent(e) for e in
+            calendar_client.CalendarQuery(query).entry]
 
 
 class NoEvents(Exception):
@@ -137,7 +138,9 @@ def mail_events(recipients=None):
             "admin-alert-%s.txt" % event.metadata['type'], "admin-alert.txt"
         ]
 
-    elif days == app.config['LIST_REMINDER_DAYS'] or days == app.config['LIST_FINAL_REMINDER_DAYS']:
+    elif (days == app.config['LIST_REMINDER_DAYS']
+          or days == app.config['LIST_FINAL_REMINDER_DAYS']):
+
         print "Sending list email - %s days before event." % days
         to = recipients if recipients else app.config['NOTIFICATION_EMAILS']
         subject = "[Python Glasgow] " + subject

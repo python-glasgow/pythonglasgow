@@ -20,7 +20,7 @@ except KeyError as e:
     print "MISSING MAIL SETTINGS."
 
 _TWITTER = ['TWITTER_CONSUMER_KEY', 'TWITTER_ACCESS_TOKEN'
-                'TWITTER_CONSUMER_SECRET', 'TWITTER_ACCESS_SECRET']
+            'TWITTER_CONSUMER_SECRET', 'TWITTER_ACCESS_SECRET']
 if all(i not in environ for i in _TWITTER):
     print "MISSING TWITTER SETTINGS."
 

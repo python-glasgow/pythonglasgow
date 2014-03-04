@@ -14,9 +14,10 @@ def get_members():
 
     try:
         members = get(MEMBERS_URL).json()
-        _check_rate_limit(members)
     except ConnectionError:
         raise StopIteration
+
+    _check_rate_limit(members)
 
     for member in members:
         try:
