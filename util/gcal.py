@@ -129,13 +129,17 @@ def mail_events(recipients=None):
         print "Sending Admin e-mail"
         to = recipients if recipients else app.config['ADMINS']
         subject = "[Python Glasgow] (Admin pre-warning) " + subject
-        template = ["admin-alert-%s.txt" % event.type, "admin-alert.txt", ]
+        template = [
+            "admin-alert-%s.txt" % event.metadata['type'], "admin-alert.txt"
+        ]
 
     elif days == app.config['LIST_REMINDER_DAYS'] or days == app.config['LIST_FINAL_REMINDER_DAYS']:
         print "Sending list email - %s days before event." % days
         to = recipients if recipients else app.config['NOTIFICATION_EMAILS']
         subject = "[Python Glasgow] " + subject
-        template = ["list-alert-%s.txt" % event.type, "list-alert.txt", ]
+        template = [
+            "list-alert-%s.txt" % event.metadata['type'], "list-alert.txt"
+        ]
 
     else:
         print "No emails today. Next event in %s days" % days
@@ -143,6 +147,7 @@ def mail_events(recipients=None):
 
     body = render_template(template, event=event, days=days, diff=app.config['ADMIN_REMINDER_DAYS'] - app.config['LIST_REMINDER_DAYS'])
 
+    to = list(to)
     msg = Message(subject, sender="no-reply@dougalmathews.com", recipients=to,
                   body=body, reply_to="glasgow@python.org")
 
