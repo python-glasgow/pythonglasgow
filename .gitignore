@@ -8,5 +8,4 @@ settings_local.py
 *.DS_Store
 *.swp
 *.un~
-*.svn/*
-config/local.py
+.coverage

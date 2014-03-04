@@ -13,7 +13,7 @@ def create_app():
         static_folder='ug/static')
 
 app = create_app()
-app.config.from_object('config')
+app.config.from_object('ug.config')
 
 try:
     sentry = Sentry(app, dsn=environ['SENTRY_DSN'])

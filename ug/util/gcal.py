@@ -8,6 +8,10 @@ import yaml
 from ug import mail, app
 
 
+def _now():
+    return datetime.now()
+
+
 def _nth(num):
     """ Returns the 'th' suffix to the given num. What's that thing called?
     """
@@ -58,7 +62,7 @@ class CalendarEvent(object):
         return time_s + ampm
 
     def days_until(self):
-        until_event = self.when - datetime.now()
+        until_event = self.when - _now()
 
         return until_event.days
 
@@ -78,7 +82,7 @@ def upcoming_events(days=90):
     # start_min, start_max options
     month_offset = timedelta(days=days)
 
-    start_min = datetime.now()
+    start_min = _now()
     start_max = start_min + month_offset
 
     query.start_min = start_min.isoformat()
@@ -145,7 +149,8 @@ def mail_events(recipients=None):
         print "No emails today. Next event in %s days" % days
         return
 
-    body = render_template(template, event=event, days=days, diff=app.config['ADMIN_REMINDER_DAYS'] - app.config['LIST_REMINDER_DAYS'])
+    diff = app.config['ADMIN_REMINDER_DAYS'] - app.config['LIST_REMINDER_DAYS']
+    body = render_template(template, event=event, days=days, diff=diff)
 
     to = list(to)
     msg = Message(subject, sender="no-reply@dougalmathews.com", recipients=to,
