@@ -6,3 +6,4 @@ mock
 coverage
 honcho
 flake8
+flask-webtest
