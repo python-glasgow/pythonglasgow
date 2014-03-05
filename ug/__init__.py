@@ -45,7 +45,7 @@ try:
     mail_handler.setLevel(ERROR)
     app.logger.addHandler(mail_handler)
 
-except KeyError as e:
+except KeyError:
     pass
 
 
