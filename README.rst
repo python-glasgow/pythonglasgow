@@ -1,6 +1,10 @@
 Python Glasgow
 ==============
 
+.. image:: https://secure.travis-ci.org/python-glasgow/pythonglasgow.png
+   :alt: Build Status
+   :target: https://travis-ci.org/python-glasgow/pythonglasgow
+
 This is the code for www.pythonglasgow.org
 
 The site is hosted on Heroku and uses Flask.
