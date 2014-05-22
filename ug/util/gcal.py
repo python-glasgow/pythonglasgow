@@ -26,13 +26,27 @@ def _nth(num):
             return 'rd'
     return 'th'
 
+DATE_FORMATS = (
+    '%Y-%m-%dT%H:%M:%S',
+    '%Y-%m-%d',
+)
+
 
 class CalendarEvent(object):
     def __init__(self, atom_ob):
         self.title = atom_ob.title.text
         whs = atom_ob.when[0].start_time
         whs = whs.split('.')[0]
-        self.when = datetime.strptime(whs, '%Y-%m-%dT%H:%M:%S')
+
+        for fmt in DATE_FORMATS:
+            try:
+                self.when = datetime.strptime(whs, fmt)
+                break
+            except ValueError:
+                pass
+        else:
+            self.when = None
+
         self.where = atom_ob.where[0].value_string
 
         self.description = atom_ob.content.text
@@ -50,18 +64,30 @@ class CalendarEvent(object):
             self.metadata['type'] = self.title.split(' ', 1)[0].lower()
 
     def date_string(self):
+
+        if self.when is None:
+            return
+
         date_s = self.when.strftime("%A %d%%s of %B")
         date_s = date_s % _nth(self.when.day)
 
         return date_s
 
     def time_string(self):
+
+        if self.when is None:
+            return
+
         time_s = "%d:%02d" % (self.when.hour % 12, self.when.minute)
         ampm = self.when.strftime("%p").lower()
 
         return time_s + ampm
 
     def days_until(self):
+
+        if self.when is None:
+            return 0
+
         until_event = self.when - _now()
 
         return until_event.days
