@@ -39,7 +39,7 @@ class GCalTestCase(TestCase):
 
         mock_calendar.return_value.entry = [self.atom_pub, self.atom_dojo]
 
-        pub, dojo = upcoming_events()
+        dojo, pub = upcoming_events()
 
         # TODO: Verify the query.
         mock_calendar.assert_called_once()
