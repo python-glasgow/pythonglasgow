@@ -115,8 +115,8 @@ def upcoming_events(days=90):
     query.start_max = start_max.isoformat()
 
     # query gcal for the time interval
-    return [CalendarEvent(e) for e in
-            calendar_client.CalendarQuery(query).entry]
+    return reversed([CalendarEvent(e) for e in
+                    calendar_client.CalendarQuery(query).entry])
 
 
 class NoEvents(Exception):
