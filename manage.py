@@ -4,8 +4,8 @@ from flask.ext.script import Manager
 
 
 from ug import app
-from util.gcal import mail_events
-from util.twitter import tweet_events
+from ug.util.gcal import mail_events
+from ug.util.twitter import tweet_events
 
 manager = Manager(app)
 

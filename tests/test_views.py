@@ -9,7 +9,7 @@ class ViewsTestCase(TestCase):
         self.app = app
         self.w = TestApp(self.app)
 
-    def test(self):
+    def test_home(self):
 
         r = self.w.get('/')
 
