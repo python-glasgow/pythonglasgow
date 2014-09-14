@@ -7,3 +7,6 @@ coverage
 honcho
 flake8
 flask-webtest
+gunicorn
+gevent
+Flask-Script
