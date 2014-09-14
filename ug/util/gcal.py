@@ -5,7 +5,7 @@ from flask import render_template
 from gdata.calendar.service import CalendarService, CalendarEventQuery
 import yaml
 
-from ug import mail, app
+from ug import app
 
 
 def _now():
@@ -185,4 +185,4 @@ def mail_events(recipients=None):
     msg = Message(subject, sender="no-reply@dougalmathews.com", recipients=to,
                   body=body, reply_to="glasgow@python.org")
 
-    mail.send(msg)
+    app.mail.send(msg)
