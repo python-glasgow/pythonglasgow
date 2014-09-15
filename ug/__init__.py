@@ -68,10 +68,8 @@ class App(Flask):
 app = App("pythonglasgow", template_folder='ug/templates',
           static_folder='ug/static')
 app.config.from_object('ug.config')
-app.before_first_request_funcs.extend([
-    app.setup_log_handler,
-    app.setup_debug_toolbar,
-])
+app.setup_debug_toolbar()
+app.before_first_request_funcs.append(app.setup_log_handler)
 
 
 @app.errorhandler(404)
