@@ -9,8 +9,6 @@ from flask_mail import Mail
 from raven.contrib.flask import Sentry
 from werkzeug.contrib.cache import SimpleCache
 
-__version__ = '1.0'
-
 
 class memoize(object):
     def __init__(self, func):

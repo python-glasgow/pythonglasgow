@@ -12,7 +12,7 @@ def read(*parts):
 
 setup(
     name="ug",
-    version=__import__('ug').__version__,
+    version="1.0",
     url='https://github.com/python-glasgow/pythonglasgow',
     license='BSD',
     description="",
