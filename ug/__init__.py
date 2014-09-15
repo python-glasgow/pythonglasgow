@@ -1,46 +1,31 @@
-import functools
 from logging import ERROR
 from logging.handlers import SMTPHandler
 from os import environ
 import warnings
 
 from flask import Flask, render_template, request
+from flask.helpers import locked_cached_property
 from flask_mail import Mail
 from raven.contrib.flask import Sentry
 from werkzeug.contrib.cache import SimpleCache
 
 
-class memoize(object):
-    def __init__(self, func):
-        self.func = func
-        self.result = None
-        functools.update_wrapper(self, func)
-
-    def __call__(self, *args, **kwargs):
-        if self.result is None:
-            self.result = self.func(*args, **kwargs)
-        return self.result
-
-
 class App(Flask):
-    @property
-    @memoize
+    @locked_cached_property
     def sentry(self):
         dsn = environ.get('SENTRY_DSN', None)
         if dsn:
             return Sentry(self.app, dsn)
         warnings.warn('Missing Sentry DSN.', UserWarning)
 
-    @property
-    @memoize
+    @locked_cached_property
     def cache(self):
         if self.config['DEBUG']:
             from werkzeug.contrib.cache import NullCache
             return NullCache()
         return SimpleCache()
 
-    @property
-    @memoize
+    @locked_cached_property
     def mail(self):
         return Mail(self)
 
