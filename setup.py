@@ -1,17 +1,7 @@
 from __future__ import print_function
-import ast
 import os
 import codecs
 from setuptools import setup
-
-
-class VersionFinder(ast.NodeVisitor):
-    def __init__(self):
-        self.version = None
-
-    def visit_Assign(self, node):
-        if node.targets[0].id == '__version__':
-            self.version = node.value.s
 
 
 def read(*parts):
@@ -20,15 +10,9 @@ def read(*parts):
         return fp.read()
 
 
-def find_version(*parts):
-    finder = VersionFinder()
-    finder.visit(ast.parse(read(*parts)))
-    return finder.version
-
-
 setup(
     name="ug",
-    version=find_version("ug", "__init__.py"),
+    version=__import__('ug').__version__,
     url='https://github.com/python-glasgow/pythonglasgow',
     license='BSD',
     description="",
