@@ -9,6 +9,8 @@ from flask_mail import Mail
 from raven.contrib.flask import Sentry
 from werkzeug.contrib.cache import SimpleCache
 
+from .util import github
+
 
 class memoize(object):
     def __init__(self, func):
@@ -43,6 +45,13 @@ class App(Flask):
     @memoize
     def mail(self):
         return Mail(self)
+
+    def get_github_members(self):
+        org = app.config.get('GITHUB_ORG', None)
+        if org is None:
+            warnings.warn("No Github organization defined.")
+            return []
+        return github.get_members(org)
 
     def setup_log_handler(self):
         # Try to setup email logging if details can be found.
