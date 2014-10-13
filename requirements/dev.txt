@@ -1,12 +1,11 @@
 -r base.txt
-flask-debugtoolbar
+coverage
+flake8
+Flask-Script
+flask-webtest
+gevent
+gunicorn
+honcho
+mock
 nose
 unittest2
-mock
-coverage
-honcho
-flake8
-flask-webtest
-gunicorn
-gevent
-Flask-Script
