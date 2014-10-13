@@ -13,11 +13,12 @@ from .util import github
 
 
 class App(Flask):
+
     @locked_cached_property
     def sentry(self):
         dsn = environ.get('SENTRY_DSN', None)
         if dsn:
-            return Sentry(self.app, dsn)
+            return Sentry(self, dsn=dsn)
         warnings.warn('Missing Sentry DSN.', UserWarning)
 
     @locked_cached_property
@@ -32,7 +33,7 @@ class App(Flask):
         return Mail(self)
 
     def get_github_members(self):
-        org = app.config.get('GITHUB_ORG', None)
+        org = self.config.get('GITHUB_ORG', None)
         if org is None:
             warnings.warn("No Github organization defined.")
             return []
@@ -64,6 +65,11 @@ app = App("pythonglasgow", template_folder='ug/templates',
 app.config.from_object('ug.config')
 app.setup_debug_toolbar()
 app.before_first_request_funcs.append(app.setup_log_handler)
+
+# Sentry must be initialised as setup time. These is a better way
+# to do this, but for now we will just access the property to
+# trigger it.
+app.sentry
 
 
 @app.errorhandler(404)
