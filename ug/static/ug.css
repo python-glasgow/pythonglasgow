@@ -63,3 +63,7 @@ pre{
 .members img {
   max-width: 150px;
 }
+
+.sponsors img {
+  padding-right: 10px;
+}
