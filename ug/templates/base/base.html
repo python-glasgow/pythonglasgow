@@ -9,65 +9,129 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 
-    <link rel="alternate" type="application/rss+xml" title="Python Glasgow Meetup RSS Feed" href="http://www.google.com/calendar/feeds/19d0eal34nt9boelm74n7p88vg@group.calendar.google.com/public/basic?futureevents=true"/>
-    <link rel="alternate" type="text/calendar" title="Python Glasgow Meetup iCal Feed" href="https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics"/>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/freelancer.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/ug.css') }}" rel="stylesheet">
 
-    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='ug.css') }}" rel="stylesheet">
 
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ url_for('static', filename='ico/apple-touch-icon-144-precomposed.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ url_for('static', filename='ico/apple-touch-icon-114-precomposed.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ url_for('static', filename='ico/apple-touch-icon-72-precomposed.png') }}">
-    <link rel="apple-touch-icon-precomposed" href="{{ url_for('static', filename='ico/apple-touch-icon-57-precomposed.png') }}">
   </head>
 
-  <body>
+<body id="page-top" class="index">
 
-    <div class="container">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Python Glasgow</a>
+            </div>
 
-      <div class="masterhead">
-        <h1>Python Glasgow</h1>
-        <h1><small>The user group for Pythonistas in Glasgow.</small></h1>
-      </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="{{ url_for('base.code_of_conduct') }}">Code of Conduct</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="http://pythonscotland.org">Python Scotland</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
 
-      {% block content %}{% endblock %}
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-responsive" src="{{ url_for('static', filename='img/python-logo.svg') }}" alt="">
+                    <div class="intro-text">
+                        <span class="name">Python Glasgow</span>
+                        <hr />
+                        <span class="skills">The user group for Pythonistas in Glasgow.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-        <ul class="nav navbar-nav">
-          <li><a href="http://twitter.com/#!/pythonglasgow">Twitter</a></li>
-          <li><a href="irc://irc.freenode.net/python-scotland">IRC</a></li>
-          <li><a href="http://mail.python.org/mailman/listinfo/glasgow">Mailing list</a></li>
-          <li><a href="http://github.com/{{ config.GITHUB_ORG }}">GitHub</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="http://www.pythonscotland.org/">Visit other Scottish Python groups</a></li>
-        </ul>
-      </nav>
+    <section>
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </section>
 
-    </div>
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-xs-2 col-sm-2">
+                      <a href="http://twitter.com/#!/pythonglasgow">Follow us on Twitter</a>
+                    </div>
+                    <div class="footer-col col-xs-2 col-sm-2">
+                      <a href="irc://irc.freenode.net/python-scotland">Chat on IRC</a>
+                    </div>
+                    <div class="footer-col col-xs-2 col-sm-2">
+                      <a href="http://mail.python.org/mailman/listinfo/glasgow">Email the group list</a>
+                    </div>
+                    <div class="footer-col col-xs-2 col-sm-2">
+                      <a href="http://github.com/{{ config.GITHUB_ORG }}">Fork our GitHub</a></li>
+                    </div>
+                    <div class="footer-col col-xs-2 col-sm-2">
+                      <a href="http://www.pythonscotland.org/">Other Scottish groups</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="{{ url_for('static', filename='js/jquery-1.11.0.js') }}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="{{ url_for('static', filename='js/freelancer.js') }}"></script>
+
+
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36677785-1']);
+      _gaq.push(['_setDomainName', 'pythonglasgow.org']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
 
   </body>
-
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  <script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-36677785-1']);
-    _gaq.push(['_setDomainName', 'pythonglasgow.org']);
-    _gaq.push(['_setAllowLinker', true]);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
-
 </html>
