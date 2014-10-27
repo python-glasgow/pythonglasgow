@@ -17,7 +17,9 @@ def index():
     tweets = get_tweets()
     events = upcoming_events()
     members = app.get_github_members()
-    shuffle(members)
+
+    if members:
+        shuffle(members)
 
     return render_template(
         'base/index.html',
