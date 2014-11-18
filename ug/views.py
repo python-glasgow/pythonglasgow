@@ -2,10 +2,10 @@ from random import shuffle
 
 from flask import Blueprint, render_template
 
-from . import app
-from util.cache import cached
-from util.ical import upcoming_events
-from util.twitter import get_tweets
+from ug import app
+from ug.util.cache import cached
+from ug.util.ical import upcoming_events
+from ug.util.twitter import get_tweets
 
 mod = Blueprint('base', __name__)
 

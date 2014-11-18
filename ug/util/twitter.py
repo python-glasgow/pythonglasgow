@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from logging import error
 from os import environ
 from re import compile
@@ -102,25 +104,25 @@ def tweet_events():
     try:
         days, event = days_until_next_event()
     except NoEvents:
-        print "no events"
+        print("no events")
         return
 
     where = event.where.split(',')[0]
     time = event.when.time()
     time_string = "%02d:%02d" % (time.hour, time.minute)
 
-    print days
+    print(days)
 
     if days == app.config['ADMIN_REMINDER_DAYS']:
 
-        print "DM to d0ugal"
+        print("DM to d0ugal")
 
         send_dm("d0ugal",
                 "Hey - we have an event coming up, have you sorted it?")
 
     elif days == app.config['LIST_REMINDER_DAYS']:
 
-        print "weekly tweet"
+        print("weekly tweet")
 
         tweet = ('The next Python Glasgow event is a {title} in {days} '
                  'days at {where}. See http://pythonglasgow.org/ for more '
@@ -131,7 +133,7 @@ def tweet_events():
 
     elif days == 0:
 
-        print "on the day tweet."
+        print("on the day tweet.")
 
         tweet = ("There is a {title} tonight at {time} in {where}. See "
                  "http://pythonglasgow.org/ for more details."
@@ -141,4 +143,4 @@ def tweet_events():
         send_dm("d0ugal", tweet)
 
     else:
-        print "No Twitter updates today"
+        print("No Twitter updates today")

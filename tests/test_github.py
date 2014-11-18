@@ -12,6 +12,6 @@ class GithubTestCase(TestCase):
     def test_get_members(self, mock_get):
         response = Response()
         response.status_code = 200
-        response._content = "[]"
+        response._content = b"[]"
         mock_get.return_value = response
         self.assertEquals(app.get_github_members(), [])

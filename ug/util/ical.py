@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from datetime import date, datetime, timedelta
 
 from flask_mail import Message
@@ -148,7 +150,7 @@ def mail_events(recipients=None):
     try:
         days, event = days_until_next_event()
     except NoEvents:
-        print "no events"
+        print("no events")
         return
 
     where = event.where.split(',')[0]
@@ -156,7 +158,7 @@ def mail_events(recipients=None):
     subject = " %s on %s in %s" % (event.title, event.date_string(), where)
 
     if days == app.config['ADMIN_REMINDER_DAYS']:
-        print "Sending Admin e-mail"
+        print("Sending Admin e-mail")
         to = recipients if recipients else app.config['ADMINS']
         subject = "[Python Glasgow] (Admin pre-warning) " + subject
         template = [
@@ -166,7 +168,7 @@ def mail_events(recipients=None):
     elif (days == app.config['LIST_REMINDER_DAYS']
           or days == app.config['LIST_FINAL_REMINDER_DAYS']):
 
-        print "Sending list email - %s days before event." % days
+        print("Sending list email - %s days before event." % days)
         to = recipients if recipients else app.config['NOTIFICATION_EMAILS']
         subject = "[Python Glasgow] " + subject
         template = [
@@ -174,7 +176,7 @@ def mail_events(recipients=None):
         ]
 
     else:
-        print "No emails today. Next event in %s days" % days
+        print("No emails today. Next event in %s days" % days)
         return
 
     diff = app.config['ADMIN_REMINDER_DAYS'] - app.config['LIST_REMINDER_DAYS']

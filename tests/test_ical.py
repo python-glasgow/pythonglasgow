@@ -18,7 +18,7 @@ def _load_calendar():
 
 @patch('ug.util.ical._load_calendar', new=_load_calendar)
 @patch('ug.util.ical._now',
-       return_value=datetime(2014, 11, 18, 8, 24, 07, tzinfo=pytz.utc))
+       return_value=datetime(2014, 11, 18, 8, 24, 7, tzinfo=pytz.utc))
 class IcalTestCase(TestCase):
 
     def setUp(self):
@@ -64,7 +64,7 @@ class IcalTestCase(TestCase):
     def test_days_until_next_event_none(self, mock_now):
 
         mock_now.return_value = datetime(
-            2015, 11, 18, 8, 24, 07, tzinfo=pytz.utc)
+            2015, 11, 18, 8, 24, 7, tzinfo=pytz.utc)
 
         with self.assertRaises(ical.NoEvents):
             ical.days_until_next_event()
