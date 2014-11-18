@@ -97,7 +97,7 @@ def send_dm(username, text):
 
 def tweet_events():
 
-    from ug.util.gcal import NoEvents, days_until_next_event
+    from ug.util.ical import NoEvents, days_until_next_event
 
     try:
         days, event = days_until_next_event()

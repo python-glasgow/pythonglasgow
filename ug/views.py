@@ -4,7 +4,7 @@ from flask import Blueprint, render_template
 
 from . import app
 from util.cache import cached
-from util.gcal import upcoming_events
+from util.ical import upcoming_events
 from util.twitter import get_tweets
 
 mod = Blueprint('base', __name__)

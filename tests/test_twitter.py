@@ -82,37 +82,37 @@ class TwitterTestCase(TestCase):
 
             mock_api.assert_called_once_with(screen_name="d0ugal", text="Hi!")
 
-    @patch('ug.util.gcal.days_until_next_event')
+    @patch('ug.util.ical.days_until_next_event')
     @patch('ug.util.twitter.send_dm')
     @patch('ug.util.twitter.update_status')
-    def test_tweet_far_future(self, mock_update, mock_dm, mock_gcal):
+    def test_tweet_far_future(self, mock_update, mock_dm, mock_ical):
 
-        mock_gcal.return_value = (100, self.mock_event)
+        mock_ical.return_value = (100, self.mock_event)
         tweet_events()
 
         assert not mock_dm.called
         assert not mock_update.called
 
-    @patch('ug.util.gcal.days_until_next_event')
+    @patch('ug.util.ical.days_until_next_event')
     @patch('ug.util.twitter.send_dm')
     @patch('ug.util.twitter.update_status')
-    def test_tweet_admin_reminder(self, mock_update, mock_dm, mock_gcal):
+    def test_tweet_admin_reminder(self, mock_update, mock_dm, mock_ical):
 
         num_days = app.config['ADMIN_REMINDER_DAYS']
-        mock_gcal.return_value = (num_days, self.mock_event)
+        mock_ical.return_value = (num_days, self.mock_event)
         tweet_events()
 
         mock_dm.assert_called_once_with(
             'd0ugal', 'Hey - we have an event coming up, have you sorted it?')
         assert not mock_update.called
 
-    @patch('ug.util.gcal.days_until_next_event')
+    @patch('ug.util.ical.days_until_next_event')
     @patch('ug.util.twitter.send_dm')
     @patch('ug.util.twitter.update_status')
-    def test_tweet_list_reminder(self, mock_update, mock_dm, mock_gcal):
+    def test_tweet_list_reminder(self, mock_update, mock_dm, mock_ical):
 
         num_days = app.config['LIST_REMINDER_DAYS']
-        mock_gcal.return_value = (num_days, self.mock_event)
+        mock_ical.return_value = (num_days, self.mock_event)
         tweet_events()
 
         mock_dm.assert_called_once_with(

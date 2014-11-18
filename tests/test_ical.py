@@ -4,11 +4,11 @@ from unittest2 import TestCase
 from mock import patch, Mock
 
 from ug import app
-from ug.util.gcal import (CalendarEvent, upcoming_events, NoEvents,
+from ug.util.ical import (CalendarEvent, upcoming_events, NoEvents,
                           days_until_next_event, mail_events)
 
 
-class GCalTestCase(TestCase):
+class icalTestCase(TestCase):
 
     def setUp(self):
 
@@ -59,8 +59,8 @@ class GCalTestCase(TestCase):
             'link': 'http://pythonglasgow.org/'
         })
 
-    @patch('ug.util.gcal.upcoming_events')
-    @patch('ug.util.gcal._now', return_value=datetime(2014, 03, 04, 20, 0, 0))
+    @patch('ug.util.ical.upcoming_events')
+    @patch('ug.util.ical._now', return_value=datetime(2014, 03, 04, 20, 0, 0))
     def test_days_until_next_event(self, mock_now, mock_upcoming_events):
 
         mock_upcoming_events.return_value = [self.event_pub, self.event_dojo]
@@ -70,7 +70,7 @@ class GCalTestCase(TestCase):
         self.assertEquals(days, 6)
         self.assertEquals(event, self.event_pub)
 
-    @patch('ug.util.gcal.upcoming_events')
+    @patch('ug.util.ical.upcoming_events')
     def test_days_until_next_event_none(self, mock_upcoming_events):
 
         mock_upcoming_events.return_value = []
@@ -79,7 +79,7 @@ class GCalTestCase(TestCase):
             days_until_next_event()
 
     @patch('flask_mail._MailMixin.send')
-    @patch('ug.util.gcal.days_until_next_event')
+    @patch('ug.util.ical.days_until_next_event')
     def test_mail_events_noop(self, mock_days_until_next_event, mock_send):
 
         mock_days_until_next_event.return_value = (20, self.event_pub)
@@ -89,7 +89,7 @@ class GCalTestCase(TestCase):
         assert not mock_send.called
 
     @patch('flask_mail._MailMixin.send')
-    @patch('ug.util.gcal.days_until_next_event')
+    @patch('ug.util.ical.days_until_next_event')
     def test_mail_events_admin(self, mock_days_until_next_event, mock_send):
 
         mock_days_until_next_event.return_value = (
@@ -102,7 +102,7 @@ class GCalTestCase(TestCase):
         mock_send.assert_called_once()
 
     @patch('flask_mail.Mail.send')
-    @patch('ug.util.gcal.days_until_next_event')
+    @patch('ug.util.ical.days_until_next_event')
     def test_mail_events_list(self, mock_days_until_next_event, mock_send):
 
         mock_days_until_next_event.return_value = (
@@ -115,7 +115,7 @@ class GCalTestCase(TestCase):
         mock_send.assert_called_once()
 
     @patch('flask_mail.Mail.send')
-    @patch('ug.util.gcal.days_until_next_event')
+    @patch('ug.util.ical.days_until_next_event')
     def test_mail_no_events(self, mock_days_until_next_event, mock_send):
 
         mock_days_until_next_event.side_effect = NoEvents("")
