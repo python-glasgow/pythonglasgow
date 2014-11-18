@@ -1,15 +1,77 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 from flask_mail import Message
 from flask import render_template
-from gdata.calendar.service import CalendarService, CalendarEventQuery
 import yaml
+import pytz
+import requests
+from icalendar import Calendar
 
 from ug import app
 
 
+class Event(object):
+
+    def __init__(self, start, title, where, description):
+        self.start = start
+        self.title = title
+        self.where = where
+        self.description, self.metadata = self._event_metadata(description)
+
+    def _event_metadata(self, description):
+
+        split_on = "----------"
+
+        if split_on in description:
+            description, metadata = description.split(split_on)
+            metadata = yaml.load(metadata)
+        else:
+            metadata = {}
+
+        if 'type' not in metadata:
+            metadata['type'] = self.title.split(' ', 1)[0].lower()
+
+        return description, metadata
+
+    def days_until(self):
+        until_event = self.start - _now()
+        return until_event.days
+
+    def date_string(self):
+        if self.start is None:
+            return
+        date_s = self.start.strftime("%A %d%%s of %B")
+        date_s = date_s % _nth(self.start.day)
+        return date_s
+
+    def time_string(self):
+        if self.start is None:
+            return
+        time_s = "%d:%02d" % (self.start.hour % 12, self.start.minute)
+        ampm = self.start.strftime("%p").lower()
+        return time_s + ampm
+
+    @classmethod
+    def from_vevent(cls, vevent):
+
+        return Event(
+            start=vevent.get('dtstart').dt,
+            title=vevent.get('summary').title(),
+            where=vevent.get('location').title(),
+            description=str(vevent.get('description'))
+        )
+
+
+def _load_calendar():
+
+    ical_request = requests.get(app.config['ICAL'])
+    cal = Calendar.from_ical(ical_request.text)
+
+    return cal
+
+
 def _now():
-    return datetime.now()
+    return datetime.now(tz=pytz.utc)
 
 
 def _nth(num):
@@ -26,98 +88,34 @@ def _nth(num):
             return 'rd'
     return 'th'
 
-DATE_FORMATS = (
-    '%Y-%m-%dT%H:%M:%S',
-    '%Y-%m-%d',
-)
 
+def upcoming_events(days=60, cal=None):
 
-class CalendarEvent(object):
-    def __init__(self, atom_ob):
-        self.title = atom_ob.title.text
-        whs = atom_ob.when[0].start_time
-        whs = whs.split('.')[0]
+    if cal is None:
+        cal = _load_calendar()
 
-        for fmt in DATE_FORMATS:
-            try:
-                self.when = datetime.strptime(whs, fmt)
-                break
-            except ValueError:
-                pass
-        else:
-            self.when = None
+    now = _now()
+    future = now + timedelta(days=days)
+    events = []
 
-        self.where = atom_ob.where[0].value_string
+    for vevent in cal.walk('vevent'):
 
-        self.description = atom_ob.content.text
+        start = vevent.get('dtstart').dt
 
-        split_on = "----------"
-        if self.description and split_on in self.description:
-            self.description, metadata = self.description.split(split_on)
+        if isinstance(start, date):
+            start = datetime.combine(start, datetime.min.time())
 
-            self.metadata = yaml.load(metadata)
+        start = start.replace(tzinfo=pytz.utc)
 
-        else:
-            self.metadata = {}
+        if start < now:
+            continue
 
-        if 'type' not in self.metadata:
-            self.metadata['type'] = self.title.split(' ', 1)[0].lower()
+        if start > future:
+            continue
 
-    def date_string(self):
+        events.insert(0, Event.from_vevent(vevent))
 
-        if self.when is None:
-            return
-
-        date_s = self.when.strftime("%A %d%%s of %B")
-        date_s = date_s % _nth(self.when.day)
-
-        return date_s
-
-    def time_string(self):
-
-        if self.when is None:
-            return
-
-        time_s = "%d:%02d" % (self.when.hour % 12, self.when.minute)
-        ampm = self.when.strftime("%p").lower()
-
-        return time_s + ampm
-
-    def days_until(self):
-
-        if self.when is None:
-            return 0
-
-        until_event = self.when - _now()
-
-        return until_event.days
-
-
-def upcoming_events(days=90):
-    return []
-
-    # Create a Google Calendar client to talk to the Google Calendar service.
-    calendar_client = CalendarService()
-
-    # Set up a query with the GCAL_ID.
-    query = CalendarEventQuery(app.config['GCAL_ID'], 'public', 'full')
-    query.orderby = 'starttime'
-    query.sortorder = 'descending'
-
-    # we're interested in events in the next 60 days if we wanted all the
-    # futuer events, we'd use query.futureevents='true' and ignore the
-    # start_min, start_max options
-    month_offset = timedelta(days=days)
-
-    start_min = _now()
-    start_max = start_min + month_offset
-
-    query.start_min = start_min.isoformat()
-    query.start_max = start_max.isoformat()
-
-    # query gcal for the time interval
-    return list(reversed([CalendarEvent(e) for e in
-                         calendar_client.CalendarQuery(query).entry]))
+    return events
 
 
 class NoEvents(Exception):
@@ -126,7 +124,7 @@ class NoEvents(Exception):
 
 def days_until_next_event():
 
-    events = upcoming_events(days=90)
+    events = upcoming_events()
 
     if len(events) == 0:
         raise NoEvents("No events planned")

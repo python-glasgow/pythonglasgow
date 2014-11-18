@@ -1,126 +1,114 @@
 from datetime import datetime
 from unittest2 import TestCase
+from os import path
 
-from mock import patch, Mock
+import pytz
+from mock import patch
 
 from ug import app
-from ug.util.ical import (CalendarEvent, upcoming_events, NoEvents,
-                          days_until_next_event, mail_events)
+from ug.util import ical
 
 
-class icalTestCase(TestCase):
+def _load_calendar():
+    ical_file = path.join(path.dirname(path.abspath(__file__)), 'ical.ics')
+    ical_contents = open(ical_file).read()
+    cal = ical.Calendar.from_ical(ical_contents)
+    return cal
+
+
+@patch('ug.util.ical._load_calendar', new=_load_calendar)
+@patch('ug.util.ical._now',
+       return_value=datetime(2014, 11, 18, 8, 24, 07, tzinfo=pytz.utc))
+class IcalTestCase(TestCase):
 
     def setUp(self):
 
-        app.config['TESTING'] = True
-        self.app = app.test_client()
+        self.cal = _load_calendar()
+        self.event_pub, self.event_dojo = ical.upcoming_events(cal=self.cal)
 
-        # Create two object that mimic that atom objects using within gdata.
-        self.atom_pub = Mock()
-        self.atom_pub.title.text = "Pub Meetup"
-        self.atom_pub.when = [Mock(start_time="2014-03-11T18:30:00"), ]
-        self.atom_pub.where = [Mock(value_string="Pub, Glasgow"), ]
-        self.atom_pub.content.text = "Content"
+    def test_upcoming_events(self, mock_now):
 
-        self.atom_dojo = Mock()
-        self.atom_dojo.title.text = "Dojo"
-        self.atom_dojo.when = [Mock(start_time="2014-02-11T18:00:00"), ]
-        self.atom_dojo.where = [Mock(value_string="Host, Glasgow"), ]
-        self.atom_dojo.content.text = (
-            "Content\n"
-            "----------\n"
-            "link: http://pythonglasgow.org/"
-        )
-        self.event_pub = CalendarEvent(self.atom_pub)
-        self.event_dojo = CalendarEvent(self.atom_dojo)
+        pub, dojo = ical.upcoming_events()
+        url = 'http://attending.io/events/pythonglasgow-dojo-december-2014'
 
-    @patch('gdata.calendar.service.CalendarService.CalendarQuery')
-    def test_upcoming_events(self, mock_calendar):
-
-        mock_calendar.return_value.entry = [self.atom_pub, self.atom_dojo]
-
-        dojo, pub = upcoming_events()
-
-        # TODO: Verify the query.
-        mock_calendar.assert_called_once()
-
-        self.assertEquals(pub.title, "Pub Meetup")
-        self.assertEquals(pub.when, datetime(2014, 03, 11, 18, 30, 00))
-        self.assertEquals(pub.where, "Pub, Glasgow")
-        self.assertEquals(pub.description, "Content")
-        self.assertEquals(pub.metadata, {'type': 'pub'})
-
-        self.assertEquals(dojo.title, "Dojo")
-        self.assertEquals(dojo.when, datetime(2014, 02, 11, 18, 00, 00))
-        self.assertEquals(dojo.where, "Host, Glasgow")
-        self.assertEquals(dojo.description, "Content\n")
+        self.assertEquals(dojo.title, "Coding Dojo")
+        self.assertEquals(
+            dojo.start, datetime(2014, 12, 9, 18, 30, 00, tzinfo=pytz.utc))
+        self.assertEquals(dojo.where, "Twig World, 14 N Claremont St, G3 7Le")
+        self.assertEquals(dojo.description, "")
         self.assertEquals(dojo.metadata, {
             'type': 'dojo',
-            'link': 'http://pythonglasgow.org/'
+            'link': url,
         })
 
-    @patch('ug.util.ical.upcoming_events')
-    @patch('ug.util.ical._now', return_value=datetime(2014, 03, 04, 20, 0, 0))
-    def test_days_until_next_event(self, mock_now, mock_upcoming_events):
+        self.assertEquals(pub.title, "Pub Meetup")
+        self.assertEquals(
+            pub.start, datetime(2014, 11, 19, 18, 30, 00, tzinfo=pytz.utc))
+        self.assertEquals(pub.where, ("The Raven Glasgow, 81-85 Renfield St, "
+                                      "Glasgow G2 1Nq, United Kingdom"))
+        self.assertEquals(pub.description, "")
+        self.assertEquals(pub.metadata, {
+            'type': 'pub',
+        })
 
-        mock_upcoming_events.return_value = [self.event_pub, self.event_dojo]
+    def test_days_until_next_event(self, mock_now):
 
-        days, event = days_until_next_event()
+        days, event = ical.days_until_next_event()
 
-        self.assertEquals(days, 6)
-        self.assertEquals(event, self.event_pub)
+        self.assertEquals(1, days)
+        self.assertEquals(event.title, self.event_pub.title)
+        self.assertEquals(event.start, self.event_pub.start)
 
-    @patch('ug.util.ical.upcoming_events')
-    def test_days_until_next_event_none(self, mock_upcoming_events):
+        self.assertEquals(21, self.event_dojo.days_until())
 
-        mock_upcoming_events.return_value = []
+    def test_days_until_next_event_none(self, mock_now):
 
-        with self.assertRaises(NoEvents):
-            days_until_next_event()
+        mock_now.return_value = datetime(
+            2015, 11, 18, 8, 24, 07, tzinfo=pytz.utc)
+
+        with self.assertRaises(ical.NoEvents):
+            ical.days_until_next_event()
 
     @patch('flask_mail._MailMixin.send')
     @patch('ug.util.ical.days_until_next_event')
-    def test_mail_events_noop(self, mock_days_until_next_event, mock_send):
+    def test_mail_events_noop(self, mock_days_until, mock_send, mock_now):
 
-        mock_days_until_next_event.return_value = (20, self.event_pub)
+        mock_days_until.return_value = (20, self.event_pub)
 
-        mail_events('test@test.com')
+        ical.mail_events('test@test.com')
 
         assert not mock_send.called
 
     @patch('flask_mail._MailMixin.send')
     @patch('ug.util.ical.days_until_next_event')
-    def test_mail_events_admin(self, mock_days_until_next_event, mock_send):
+    def test_mail_events_admin(self, mock_days_until, mock_send, mock_now):
 
-        mock_days_until_next_event.return_value = (
+        mock_days_until.return_value = (
             app.config['ADMIN_REMINDER_DAYS'], self.event_pub
         )
 
         with app.test_request_context('/send_email'):
-            mail_events('test@test.com')
+            ical.mail_events('test@test.com')
 
         mock_send.assert_called_once()
 
-    @patch('flask_mail.Mail.send')
+    @patch('flask_mail._MailMixin.send')
     @patch('ug.util.ical.days_until_next_event')
-    def test_mail_events_list(self, mock_days_until_next_event, mock_send):
+    def test_mail_events_list(self, mock_days_until, mock_send, mock_now):
 
-        mock_days_until_next_event.return_value = (
+        mock_days_until.return_value = (
             app.config['LIST_REMINDER_DAYS'], self.event_pub
         )
 
         with app.test_request_context('/send_email'):
-            mail_events('test@test.com')
+            ical.mail_events('test@test.com')
 
         mock_send.assert_called_once()
 
     @patch('flask_mail.Mail.send')
-    @patch('ug.util.ical.days_until_next_event')
-    def test_mail_no_events(self, mock_days_until_next_event, mock_send):
-
-        mock_days_until_next_event.side_effect = NoEvents("")
+    def test_mail_no_events(self, mock_now, mock_send):
 
         with app.test_request_context('/send_email'):
-            mail_events('test@test.com')
+            ical.mail_events('test@test.com')
 
         mock_send.assert_called_once()

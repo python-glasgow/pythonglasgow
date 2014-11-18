@@ -1,8 +1,5 @@
 import warnings
-from os import environ, path
-
-
-_basedir = path.abspath(path.dirname(__file__))
+from os import environ
 
 
 THREADS_PER_PAGE = 8
@@ -24,7 +21,8 @@ except KeyError as e:
     warnings.warn("Missing mail settings.", UserWarning)
 
 GITHUB_ORG = "python-glasgow"
-GCAL_ID = '19d0eal34nt9boelm74n7p88vg@group.calendar.google.com'
+ICAL = "https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics"  # NOQA
+
 _TWITTER = ['TWITTER_CONSUMER_KEY', 'TWITTER_ACCESS_TOKEN'
             'TWITTER_CONSUMER_SECRET', 'TWITTER_ACCESS_SECRET']
 if not all(i in environ for i in _TWITTER):
