@@ -94,6 +94,7 @@ class CalendarEvent(object):
 
 
 def upcoming_events(days=90):
+    return []
 
     # Create a Google Calendar client to talk to the Google Calendar service.
     calendar_client = CalendarService()
