@@ -16,17 +16,26 @@ def _load_calendar():
     return cal
 
 
-@patch('ug.util.ical._load_calendar', new=_load_calendar)
-@patch('ug.util.ical._now',
-       return_value=datetime(2014, 11, 18, 8, 24, 7, tzinfo=pytz.utc))
 class IcalTestCase(TestCase):
 
     def setUp(self):
 
+        self.now_patch = patch('ug.util.ical._now',
+                               return_value=datetime(2014, 11, 18, 8, 24, 7,
+                                                     tzinfo=pytz.utc))
+        self.now_patch.start()
+        self.load_calendar_patch = patch('ug.util.ical._load_calendar',
+                                         new=_load_calendar)
+        self.load_calendar_patch.start()
+
         self.cal = _load_calendar()
         self.event_pub, self.event_dojo = ical.upcoming_events(cal=self.cal)
 
-    def test_upcoming_events(self, mock_now):
+    def tearDown(self):
+        self.now_patch.stop()
+        self.load_calendar_patch.stop()
+
+    def test_upcoming_events(self):
 
         pub, dojo = ical.upcoming_events()
         url = 'http://attending.io/events/pythonglasgow-dojo-december-2014'
@@ -51,7 +60,7 @@ class IcalTestCase(TestCase):
             'type': 'pub',
         })
 
-    def test_days_until_next_event(self, mock_now):
+    def test_days_until_next_event(self):
 
         days, event = ical.days_until_next_event()
 
@@ -61,17 +70,17 @@ class IcalTestCase(TestCase):
 
         self.assertEquals(21, self.event_dojo.days_until())
 
-    def test_days_until_next_event_none(self, mock_now):
+    def test_days_until_next_event_none(self):
 
-        mock_now.return_value = datetime(
-            2015, 11, 18, 8, 24, 7, tzinfo=pytz.utc)
-
-        with self.assertRaises(ical.NoEvents):
-            ical.days_until_next_event()
+        with patch('ug.util.ical._now',
+                   return_value=datetime(2015, 11, 18, 8, 24, 7,
+                                         tzinfo=pytz.utc)):
+            with self.assertRaises(ical.NoEvents):
+                ical.days_until_next_event()
 
     @patch('flask_mail._MailMixin.send')
     @patch('ug.util.ical.days_until_next_event')
-    def test_mail_events_noop(self, mock_days_until, mock_send, mock_now):
+    def test_mail_events_noop(self, mock_days_until, mock_send):
 
         mock_days_until.return_value = (20, self.event_pub)
 
@@ -81,7 +90,7 @@ class IcalTestCase(TestCase):
 
     @patch('flask_mail._MailMixin.send')
     @patch('ug.util.ical.days_until_next_event')
-    def test_mail_events_admin(self, mock_days_until, mock_send, mock_now):
+    def test_mail_events_admin(self, mock_days_until, mock_send):
 
         mock_days_until.return_value = (
             app.config['ADMIN_REMINDER_DAYS'], self.event_pub
@@ -94,7 +103,7 @@ class IcalTestCase(TestCase):
 
     @patch('flask_mail._MailMixin.send')
     @patch('ug.util.ical.days_until_next_event')
-    def test_mail_events_list(self, mock_days_until, mock_send, mock_now):
+    def test_mail_events_list(self, mock_days_until, mock_send):
 
         mock_days_until.return_value = (
             app.config['LIST_REMINDER_DAYS'], self.event_pub
@@ -106,7 +115,7 @@ class IcalTestCase(TestCase):
         mock_send.assert_called_once()
 
     @patch('flask_mail.Mail.send')
-    def test_mail_no_events(self, mock_now, mock_send):
+    def test_mail_no_events(self, mock_send):
 
         with app.test_request_context('/send_email'):
             ical.mail_events('test@test.com')
