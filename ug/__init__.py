@@ -66,9 +66,9 @@ app.config.from_object('ug.config')
 app.setup_debug_toolbar()
 app.before_first_request_funcs.append(app.setup_log_handler)
 
-# Sentry must be initialised as setup time. These is a better way
-# to do this, but for now we will just access the property to
-# trigger it.
+# TODO: Fix this. Sentry must be initialised at setup time. There
+# are a million better ways to do this, but for now we will just
+# access the property to trigger it.
 app.sentry
 
 

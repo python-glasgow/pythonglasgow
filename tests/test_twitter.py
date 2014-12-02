@@ -3,11 +3,10 @@ from os import environ
 from unittest2 import TestCase
 
 from mock import patch, Mock
-from tweepy import API, TweepError
+from tweepy import API
 
 from ug import app
-from ug.util.twitter import (tweet_events, get_tweets, twitterfy,
-                             update_status, send_dm)
+from ug.util.twitter import tweet_events, update_status, send_dm
 
 
 class TwitterTestCase(TestCase):
@@ -24,45 +23,6 @@ class TwitterTestCase(TestCase):
             where='Name, Location',
             when=datetime.now()
         )
-
-    def test_twitterfy(self):
-
-        tweet = "This is text. @username. More text. #hashtag. Text"
-
-        result = twitterfy(tweet)
-
-        self.assertEquals(
-            result,
-            'This is text. @<a href="http://twitter.com/username"  '
-            'title="#username on Twitter">username</a>. More text. '
-            '#<a href="http://search.twitter.com/search?q=hashtag"  '
-            'title="#hashtag search Twitter">hashtag</a>. Text'
-        )
-
-    @patch('tweepy.auth.OAuthHandler')
-    def test_get_tweets(self, mock_oauthhandler):
-
-        mock_tweets = [Mock(text="@Tweet")]
-
-        with patch.object(
-                API, 'user_timeline', return_value=mock_tweets) as mock_api:
-
-            tweets = get_tweets(10)
-
-            mock_api.assert_called_once_with('pythonglasgow', count=10)
-
-            formatted_tweet = ('@<a href="http://twitter.com/Tweet"  '
-                               'title="#Tweet on Twitter">Tweet</a>')
-
-            self.assertEquals([(mock_tweets[0], formatted_tweet), ], tweets)
-
-    @patch('tweepy.auth.OAuthHandler')
-    def test_get_tweets_error(self, mock_oauthhandler):
-
-        with patch.object(
-                API, 'user_timeline', side_effect=TweepError("")):
-
-            get_tweets(10)
 
     @patch('tweepy.auth.OAuthHandler')
     def test_update_status(self, mock_oauthhandler):
@@ -135,18 +95,6 @@ class TwitterNoEnvTestCase(TestCase):
             where='Name, Location',
             when=datetime.now()
         )
-
-    @patch('tweepy.auth.OAuthHandler')
-    def test_get_tweets(self, mock_oauthhandler):
-
-        mock_tweets = [Mock(text="@Tweet")]
-
-        with patch.object(
-                API, 'user_timeline', return_value=mock_tweets) as mock_api:
-
-            tweets = get_tweets(10)
-            assert not mock_api.called
-            self.assertEquals([], tweets)
 
     @patch('tweepy.auth.OAuthHandler')
     def test_update_status(self, mock_oauthhandler):
