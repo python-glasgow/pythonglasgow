@@ -12,7 +12,6 @@
     <link rel="alternate" type="application/rss+xml" title="Python Glasgow Meetup RSS Feed" href="http://www.google.com/calendar/feeds/19d0eal34nt9boelm74n7p88vg@group.calendar.google.com/public/basic?futureevents=true"/>
     <link rel="alternate" type="text/calendar" title="Python Glasgow Meetup iCal Feed" href="https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics"/>
 
-    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap-responsive.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='ug.css') }}" rel="stylesheet">
 
@@ -29,42 +28,32 @@
 
   <body>
 
-    <div class="container-narrow container">
+    <div class="container">
 
       <div class="masterhead">
         <h1>Python Glasgow</h1>
         <h1><small>The user group for Pythonistas in Glasgow.</small></h1>
       </div>
 
-      <div class="row-fluid marketing">
-        {% block content %}{% endblock %}
-      </div>
+      {% block content %}{% endblock %}
 
-      <div id="navbar" class="navbar">
-
-        <div class="navbar-inner">
-
-          <div class="container" style="width: auto;">
-            <ul class="nav">
-              <li><a href="http://twitter.com/#!/pythonglasgow">Follow our Twitter</a></li>
-              <li><a href="irc://irc.freenode.net/python-scotland">Chat on IRC</a></li>
-              <li><a href="http://mail.python.org/mailman/listinfo/glasgow">Mail the list</a></li>
-	      <li><a href="http://github.com/{{ config.GITHUB_ORG }}">Fork our GitHub</a></li>
-            </ul>
-            <ul class="nav pull-right">
-              <li><a href="http://www.pythonscotland.org/">Visit other Scottish Python groups</a></li>
-            </ul>
-          </div>
-        </div><!-- /navbar-inner -->
-      </div><!-- /navbar -->
+      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+        <ul class="nav navbar-nav">
+          <li><a href="http://twitter.com/#!/pythonglasgow">Follow our Twitter</a></li>
+          <li><a href="irc://irc.freenode.net/python-scotland">Chat on IRC</a></li>
+          <li><a href="http://mail.python.org/mailman/listinfo/glasgow">Mail the list</a></li>
+          <li><a href="http://github.com/{{ config.GITHUB_ORG }}">Fork our GitHub</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="http://www.pythonscotland.org/">Visit other Scottish Python groups</a></li>
+        </ul>
+      </nav>
 
     </div>
-
 
   </body>
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='rainbow/rainbow-custom.min.js') }}"></script>
   <script type="text/javascript">
 
     var _gaq = _gaq || [];

@@ -11,7 +11,7 @@ mod = Blueprint('base', __name__)
 
 
 @mod.route('/')
-@cached(timeout=60 * 60)  # 60 mins
+@cached(timeout=60 * 2)  # 2 mins
 def index():
 
     tweets = get_tweets()

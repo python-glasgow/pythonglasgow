@@ -1,37 +1,12 @@
-body{
-  padding-top: 20px;
-  padding-bottom: 40px;
-  background-image: url(/static/paper_fibers.png);
-  line-height: 1.5em;
+.masterhead{
+  padding: 10px 40px 0 40px;
 }
 
-pre{
-  font-family: 'Ubuntu Mono', monospace;
-}
-
-/* Custom container */
-.container-narrow {
-  margin: 0 auto;
-  margin-top: 1em;
-  max-width: 800px;
+.container {
   background-color: #fff;
   background-repeat: repeat;
   border: 1px solid #ccc;
-}
-
-.masterhead{
-
-  padding: 10px 40px 0 40px;
-
-}
-
-.footer {
-  margin: 2em 0 0 0;
-}
-
-.marketing > * {
-  padding-left: 20px;
-  padding-right: 20px;
+  margin-top: 2em;
 }
 
 iframe{
@@ -39,31 +14,23 @@ iframe{
   margin-bottom: 1em;
 }
 
-.breadcrumb {
-  background-color: inherit;
-}
-
-.navbar{
-  margin-bottom: 0px;
-}
-
-.navbar-inner{
-  -webkit-border-radius: 0;
-     -moz-border-radius: 0;
-          border-radius: 0;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-pre{
-  word-break: break-word;
-  width: 740px;
-}
-
 .members img {
-  max-width: 150px;
+  max-width: 110px;
+  margin: 1px;
 }
 
 .sponsors img {
   padding-right: 10px;
+}
+
+.row{
+  border-top: 1px solid #cccccc;
+  padding: 1em 2em 2em 2em;
+  margin-top: 1em;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
 }

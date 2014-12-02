@@ -2,87 +2,96 @@
 
 {% block content %}
 
-    <h3>When and Where?</h3>
+    <div class="row">
+      <h3>When and Where?</h3>
 
-    <p> Python Glasgow meets on the <strong>2<sup>nd</sup> Tuesday</strong> of each
-    month. Other events such as talks and dojos will be announced on the
-    <a href="http://mail.python.org/mailman/listinfo/glasgow">mailing
-    list</a>, <a href="https://twitter.com/pythonglasgow">twitter account</a>
-    and listed below.</p>
+      <p> Python Glasgow meets on the <strong>2<sup>nd</sup> Tuesday</strong> of each
+      month. Other events such as talks and dojos will be announced on the
+      <a href="http://mail.python.org/mailman/listinfo/glasgow">mailing
+      list</a>, <a href="https://twitter.com/pythonglasgow">twitter account</a>
+      and listed below.</p>
+    </div>
 
-    <h3>What events are coming up?</h3>
+    <div class="row">
 
-    {% if upcoming_events|count == 0 %}
+      <h3>What events are coming up?</h3>
+
+      {% if upcoming_events|count == 0 %}
+
+        <p>
+          There are no meetings arranged in the next 60 days. Send an email to
+          the <a href="http://mail.python.org/mailman/listinfo/glasgow">mailing
+          list</a> if you would like to propose or arrange an event!
+        </p>
+
+      {% elif upcoming_events|count == 1 %}
+
+        <p>{% if upcoming_events[0].metadata.link %}<a href="{{ upcoming_events[0].metadata['link'] }}">{% endif %}
+          The next meeting is a <strong>{{upcoming_events[0].title}}
+          </strong> on {{upcoming_events[0].date_string()}} in
+          <strong>{{upcoming_events[0].where}}</strong>.
+          {% if upcoming_events[0].metadata['link'] %}</a>{% endif %}
+        </p>
+
+      {% else %}
+
+        <p>
+          There are {{ upcoming_events|length }} events soon!
+        </p>
+
+        <ul>
+          {% for e in upcoming_events %}
+            <li>
+              {% if e.metadata.link %}<a href="{{ e.metadata['link'] }}">{% endif %}
+              <strong>{{e.title}}</strong> on {{e.date_string()}} in {{e.where}}
+              {% if e.metadata['link'] %}</a>{% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+
+      {% endif %}
 
       <p>
-        There are no meetings arranged in the next 60 days. Send an email to
-        the <a href="http://mail.python.org/mailman/listinfo/glasgow">mailing
-        list</a> if you would like to propose or arrange an event!
+        Our meetup calendar is syndicated as <a href="http://www.google.com/calendar/feeds/19d0eal34nt9boelm74n7p88vg@group.calendar.google.com/public/basic?futureevents=true">rss</a>
+        and <a href="https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics">ical</a>,
+        or you can go and have a <a href="https://www.google.com/calendar/embed?src=19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com&ctz=Europe/London&mode=AGENDA">look</a>.
       </p>
 
-    {% elif upcoming_events|count == 1 %}
+    </div>
 
-      <p>{% if upcoming_events[0].metadata.link %}<a href="{{ upcoming_events[0].metadata['link'] }}">{% endif %}
-        The next meeting is a <strong>{{upcoming_events[0].title}}
-        </strong> on {{upcoming_events[0].date_string()}} in
-        <strong>{{upcoming_events[0].where}}</strong>.
-        {% if upcoming_events[0].metadata['link'] %}</a>{% endif %}
-      </p>
-
-    {% else %}
-
-      <p>
-        There are {{ upcoming_events|length }} events soon!
-      </p>
-
-      <ul>
-        {% for e in upcoming_events %}
-          <li>
-            {% if e.metadata.link %}<a href="{{ e.metadata['link'] }}">{% endif %}
-            <strong>{{e.title}}</strong> on {{e.date_string()}} in {{e.where}}
-            {% if e.metadata['link'] %}</a>{% endif %}
-          </li>
+    <div class="row">
+      {% if members %}
+        <h3>Some Python Glasgow Members on GitHub</h3>
+        <div class="members">
+        {% for member in members %}
+          <a href="{{ member.html_url }}"><img  alt="{{ member.login }}" src="{{ member.avatar_url }}" /></a>
         {% endfor %}
-      </ul>
-
-    {% endif %}
-
-    <p>
-      Our meetup calendar is syndicated as <a href="http://www.google.com/calendar/feeds/19d0eal34nt9boelm74n7p88vg@group.calendar.google.com/public/basic?futureevents=true">rss</a>
-      and <a href="https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics">ical</a>,
-      or you can go and have a <a href="https://www.google.com/calendar/embed?src=19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com&ctz=Europe/London&mode=AGENDA">look</a>.
-    </p>
-
-    {% if members %}
-
-      <h3>Some of our members</h3>
-
-      <div class="members">
-      {% for member in members %}
-        <a href="{{ member.html_url }}"><img  alt="{{ member.login }}" src="{{ member.avatar_url }}" /></a>
-      {% endfor %}
+      </div>
+      {% endif %}
     </div>
 
-    {% endif %}
-
-    <h3>Sponsors</h3>
-    <p>
-      <a href="http://www.twig-world.com/">
-          <img class="sponsors" src="{{ url_for('static', filename='twig-logo.png') }}" alt="Twig world" />
-      </a>
-      <a href="http://www.oreilly.com/">
-          <img class="sponsors" src="{{ url_for('static', filename='ug_program_member.gif') }}" alt="oreilly user group program member" />
-      </a>
-    </p>
-
-    <h3>On Twitter</h3>
-    <div class="row-fluid">
-
-      {% for status, formatted in tweets %}
-        <pre class="tweet"><p>{{ formatted|safe }} <br/><small>{{ status.created_at }}</small> </p></pre>
-      {% endfor %}
-
+    <div class="row">
+      <h3>Sponsors</h3>
+      <div class="col-md-4">
+        <h4>Book Sponsor</h4>
+        <a href="http://www.oreilly.com/">
+            <img class="sponsors" src="{{ url_for('static', filename='ug_program_member.gif') }}" alt="oreilly user group program member" />
+        </a>
+      </div>
+      <div class="col-md-4">
+        <h4>Dojo Sponsor</h4>
+        <a href="http://www.twig-world.com/">
+            <img class="sponsors" src="{{ url_for('static', filename='twig-logo.png') }}" alt="Twig world" />
+        </a>
+      </div>
     </div>
 
+    <div class="row">
+      <h3>On Twitter</h3>
+      <div class="text-center">
+        <a class="twitter-timeline"  href="https://twitter.com/pythonglasgow" data-widget-id="522750941775142914">Tweets by @pythonglasgow</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      </div>
+    </div>
 
 {% endblock %}

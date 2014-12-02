@@ -23,7 +23,7 @@ except KeyError as e:
 GITHUB_ORG = "python-glasgow"
 ICAL = "https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics"  # NOQA
 
-_TWITTER = ['TWITTER_CONSUMER_KEY', 'TWITTER_ACCESS_TOKEN'
+_TWITTER = ['TWITTER_CONSUMER_KEY', 'TWITTER_ACCESS_TOKEN',
             'TWITTER_CONSUMER_SECRET', 'TWITTER_ACCESS_SECRET']
 if not all(i in environ for i in _TWITTER):
     warnings.warn("Missing twitter settings.", UserWarning)
