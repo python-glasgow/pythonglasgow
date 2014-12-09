@@ -96,7 +96,7 @@ def upcoming_events(days=60, cal=None):
     if cal is None:
         cal = _load_calendar()
 
-    now = _now()
+    now = _now() - timedelta(days=1)
     future = now + timedelta(days=days)
     events = []
 
