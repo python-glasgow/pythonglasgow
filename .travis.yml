@@ -6,7 +6,7 @@ env:
   - TOX_ENV=py34
   - TOX_ENV=flake8
 install:
-  - pip install tox pip<=5.99.99
+  - pip install tox
 script:
   - tox -e $TOX_ENV
 notifications:
