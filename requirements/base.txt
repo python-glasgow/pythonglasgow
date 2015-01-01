@@ -8,4 +8,4 @@ raven==5.1.1
 requests==2.5.1
 uWSGI>=2.0.7
 
-git+git://github.com/tweepy/tweepy.git@2c2cc03#egg=tweepy
+git+git://github.com/tweepy/tweepy.git@9b4cb9e#egg=tweepy
