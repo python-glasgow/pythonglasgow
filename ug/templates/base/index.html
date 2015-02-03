@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <div class="row">
+    <div class="row intro">
       <h3>When and Where?</h3>
 
       <p> Python Glasgow meets on the <strong>2<sup>nd</sup> Tuesday</strong> of each
@@ -12,7 +12,7 @@
       and listed below.</p>
     </div>
 
-    <div class="row">
+    <div class="row events">
 
       <h3>What events are coming up?</h3>
 
@@ -50,38 +50,51 @@
         </ul>
 
       {% endif %}
-
-      <p>
-        Our meetup calendar is syndicated as <a href="http://www.google.com/calendar/feeds/19d0eal34nt9boelm74n7p88vg@group.calendar.google.com/public/basic?futureevents=true">rss</a>
-        and <a href="https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics">ical</a>,
-        or you can go and have a <a href="https://www.google.com/calendar/embed?src=19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com&ctz=Europe/London&mode=AGENDA">look</a>.
-      </p>
-
     </div>
 
-    <div class="row">
+
+    <div class="row members">
       {% if members %}
-        <h3>Some Python Glasgow Members on GitHub</h3>
-        <div class="members">
-        {% for member in members %}
-          <a href="{{ member.html_url }}"><img  alt="{{ member.login }}" src="{{ member.avatar_url }}" /></a>
-        {% endfor %}
-      </div>
+
+        <p>
+          Our meetup calendar is syndicated as <a href="http://www.google.com/calendar/feeds/19d0eal34nt9boelm74n7p88vg@group.calendar.google.com/public/basic?futureevents=true">rss</a>
+          and <a href="https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics">ical</a>,
+          or you can go and have a <a href="https://www.google.com/calendar/embed?src=19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com&ctz=Europe/London&mode=AGENDA">look</a>.
+        </p>
+
+        <div class="text-center">
+          {% for member in members %}
+            <a href="{{ member.html_url }}"><img  alt="{{ member.login }}" src="{{ member.avatar_url }}" /></a>
+          {% endfor %}
+
+          <p>
+            <em>Are you not listed? Ask on <a href="http://twitter.com/#!/pythonglasgow">Twitter</a>
+            or the <a href="http://mail.python.org/mailman/listinfo/glasgow">mailing list</a> to be added.</em>
+          </p>
+
+        </div>
+
       {% endif %}
     </div>
 
-    <div class="row">
+    <div class="row sponsors">
       <h3>Sponsors</h3>
-      <div class="col-md-4">
+      <div class="col-xs-6 col-sm-4">
         <h4>Book Sponsor</h4>
         <a href="http://www.oreilly.com/">
-            <img class="sponsors" src="{{ url_for('static', filename='ug_program_member.gif') }}" alt="oreilly user group program member" />
+            <img class="sponsors" src="{{ url_for('static', filename='sponsor/oreilly.gif') }}" alt="oreilly user group program member" />
         </a>
       </div>
-      <div class="col-md-4">
+      <div class="col-xs-6 col-sm-4">
         <h4>Dojo Sponsor</h4>
         <a href="http://www.twig-world.com/">
-            <img class="sponsors" src="{{ url_for('static', filename='twig-logo.png') }}" alt="Twig world" />
+            <img class="sponsors" src="{{ url_for('static', filename='sponsor/twig-logo.png') }}" alt="Twig world" />
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-4">
+        <h4>Talk Sponsor</h4>
+        <a href="http://www.skyscanner.net/">
+            <img class="sponsors" src="{{ url_for('static', filename='sponsor/skyscanner.jpeg') }}" alt="SkyScanner" />
         </a>
       </div>
     </div>
