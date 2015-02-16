@@ -165,8 +165,8 @@ def mail_events(recipients=None):
             "admin-alert-%s.txt" % event.metadata['type'], "admin-alert.txt"
         ]
 
-    elif (days == app.config['LIST_REMINDER_DAYS']
-          or days == app.config['LIST_FINAL_REMINDER_DAYS']):
+    elif (days == app.config['LIST_REMINDER_DAYS'] or
+          days == app.config['LIST_FINAL_REMINDER_DAYS']):
 
         print("Sending list email - %s days before event." % days)
         to = recipients if recipients else app.config['NOTIFICATION_EMAILS']

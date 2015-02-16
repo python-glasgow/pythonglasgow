@@ -84,5 +84,5 @@ def server_error(error):
     return render_template('500.html'), 404
 
 
-from ug import views
+from ug import views  # NOQA
 app.register_blueprint(views.mod)
