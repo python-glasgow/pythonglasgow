@@ -97,7 +97,7 @@ def upcoming_events(days=60, cal=None):
         cal = _load_calendar()
 
     now = _now() - timedelta(days=1)
-    future = now + timedelta(days=days)
+    future = now + timedelta(days=days+1)
     events = []
 
     for vevent in cal.walk('vevent'):
