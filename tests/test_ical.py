@@ -99,7 +99,7 @@ class IcalTestCase(TestCase):
         with app.test_request_context('/send_email'):
             ical.mail_events('test@test.com')
 
-        mock_send.assert_called_once()
+        self.assertEqual(mock_send.call_count, 1)
 
     @patch('flask_mail._MailMixin.send')
     @patch('ug.util.ical.days_until_next_event')
@@ -112,7 +112,7 @@ class IcalTestCase(TestCase):
         with app.test_request_context('/send_email'):
             ical.mail_events('test@test.com')
 
-        mock_send.assert_called_once()
+        self.assertEqual(mock_send.call_count, 1)
 
     @patch('flask_mail.Mail.send')
     def test_mail_no_events(self, mock_send):
@@ -120,4 +120,4 @@ class IcalTestCase(TestCase):
         with app.test_request_context('/send_email'):
             ical.mail_events('test@test.com')
 
-        mock_send.assert_called_once()
+        self.assertEqual(mock_send.call_count, 1)
