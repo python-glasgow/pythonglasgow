@@ -58,8 +58,8 @@ class Event(object):
 
         return Event(
             start=vevent.get('dtstart').dt,
-            title=vevent.get('summary').title(),
-            where=vevent.get('location').title(),
+            title=vevent.get('summary'),
+            where=vevent.get('location'),
             description=str(vevent.get('description'))
         )
 

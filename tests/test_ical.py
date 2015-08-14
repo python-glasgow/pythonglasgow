@@ -43,7 +43,7 @@ class IcalTestCase(TestCase):
         self.assertEquals(dojo.title, "Coding Dojo")
         self.assertEquals(
             dojo.start, datetime(2014, 12, 9, 18, 30, 00, tzinfo=pytz.utc))
-        self.assertEquals(dojo.where, "Twig World, 14 N Claremont St, G3 7Le")
+        self.assertEquals(dojo.where, "Twig World, 14 N Claremont St, G3 7LE")
         self.assertEquals(dojo.description, "")
         self.assertEquals(dojo.metadata, {
             'type': 'dojo',
@@ -54,7 +54,7 @@ class IcalTestCase(TestCase):
         self.assertEquals(
             pub.start, datetime(2014, 11, 19, 18, 30, 00, tzinfo=pytz.utc))
         self.assertEquals(pub.where, ("The Raven Glasgow, 81-85 Renfield St, "
-                                      "Glasgow G2 1Nq, United Kingdom"))
+                                      "Glasgow G2 1NQ, United Kingdom"))
         self.assertEquals(pub.description, "")
         self.assertEquals(pub.metadata, {
             'type': 'pub',
