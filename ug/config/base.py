@@ -20,7 +20,6 @@ try:
 except KeyError as e:
     warnings.warn("Missing mail settings.", UserWarning)
 
-GITHUB_ORG = "python-glasgow"
 ICAL = "https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics"  # NOQA
 
 _TWITTER = ['TWITTER_CONSUMER_KEY', 'TWITTER_ACCESS_TOKEN',

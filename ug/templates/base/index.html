@@ -59,27 +59,6 @@
 
     </div>
 
-
-    {% if members %}
-      <div class="row members">
-
-        <h3>Members</h3>
-
-        <div class="text-center">
-          {% for member in members %}
-            <a href="{{ member.html_url }}"><img  alt="{{ member.login }}" src="{{ member.avatar_url }}" /></a>
-          {% endfor %}
-
-          <p>
-            <em>Are you not listed? Ask on <a href="http://twitter.com/#!/pythonglasgow">Twitter</a>
-            or the <a href="http://mail.python.org/mailman/listinfo/glasgow">mailing list</a> to be added.</em>
-          </p>
-
-        </div>
-
-      </div>
-    {% endif %}
-
     <div class="row sponsors">
 
       <h3>Sponsors</h3>
