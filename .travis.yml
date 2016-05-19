@@ -1,9 +1,7 @@
 language: python
 python: 2.7
 env:
-- TOX_ENV=py27
-- TOX_ENV=py33
-- TOX_ENV=py34
+- TOX_ENV=py35
 - TOX_ENV=flake8
 install:
 - pip install tox
@@ -17,3 +15,6 @@ deploy:
   provider: heroku
   api_key:
     secure: Kwq6mfjOlaIeh2gK1rHbWCaFydx9NLnfC+OASe477Em+WUWVuOhUF1odxZqzczkEEjkwcVCdHqfBb86ajX7WKe80mWzujDTRavisbCbDe1BrcofT7udaclfbFjh4bjECaEzxXkVag+mMFpJm6eiBZFYjhrcVS9rUR52cOCesgcc=
+  on:
+    repo: python-glasgow/pythonglasgow
+    condition: "$TOXENV = py35"
