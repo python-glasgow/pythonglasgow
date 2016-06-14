@@ -31,5 +31,7 @@ ADMIN_REMINDER_DAYS = 14
 LIST_REMINDER_DAYS = 7
 LIST_FINAL_REMINDER_DAYS = 1
 # NOTIFICATION_EMAILS = frozenset(['glasgow@python.org'])
-# Disabled until I fix my shit.
+# Disabled until I fix the terrible code.
 NOTIFICATION_EMAILS = frozenset(['dougal85@gmail.com'])
+
+GITHUB_ORG = "pythonglasgow"
