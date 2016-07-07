@@ -1,23 +1,15 @@
-from logging import ERROR
+from logging import DEBUG
 from logging.handlers import SMTPHandler
 from os import environ
 import warnings
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from flask.helpers import locked_cached_property
 from flask_mail import Mail
-from raven.contrib.flask import Sentry
 from werkzeug.contrib.cache import SimpleCache
 
 
 class App(Flask):
-
-    @locked_cached_property
-    def sentry(self):
-        dsn = environ.get('SENTRY_DSN', None)
-        if dsn:
-            return Sentry(self, dsn=dsn)
-        warnings.warn('Missing Sentry DSN.', UserWarning)
 
     @locked_cached_property
     def cache(self):
@@ -43,7 +35,7 @@ class App(Flask):
             title = '[www.pythonglasgow.org] 500'
             mail_handler = SMTPHandler(smtp_server, user, admins, title,
                                        credentials=credentials, secure=())
-            mail_handler.setLevel(ERROR)
+            mail_handler.setLevel(DEBUG)
             self.logger.addHandler(mail_handler)
 
     def setup_debug_toolbar(self):
@@ -57,16 +49,9 @@ app.config.from_object('ug.config')
 app.setup_debug_toolbar()
 app.before_first_request_funcs.append(app.setup_log_handler)
 
-# TODO: Fix this. Sentry must be initialised at setup time. There
-# are a million better ways to do this, but for now we will just
-# access the property to trigger it.
-app.sentry
-
 
 @app.errorhandler(404)
 def not_found(error):
-    if app.sentry is not None:
-        app.sentry.captureMessage("404: %s" % request.url)
     return render_template('404.html'), 404
 
 
