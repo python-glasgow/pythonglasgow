@@ -34,4 +34,4 @@ LIST_FINAL_REMINDER_DAYS = 1
 # Disabled until I fix the terrible code.
 NOTIFICATION_EMAILS = frozenset(['dougal85@gmail.com'])
 
-GITHUB_ORG = "pythonglasgow"
+GITHUB_ORG = "python-glasgow"
