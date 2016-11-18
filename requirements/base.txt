@@ -2,7 +2,7 @@ Flask-DebugToolbar==0.10.0
 Flask-Mail==0.9.1
 Flask-Script==2.0.5
 Flask==0.11.1
-icalendar==3.10
+icalendar==3.11
 PyYAML==3.12
 requests==2.12.1
 uWSGI>=2.0.11.2
