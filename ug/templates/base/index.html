@@ -6,56 +6,15 @@
       <h3>When and Where?</h3>
 
       <p> Python Glasgow meets on the <strong>2<sup>nd</sup> Tuesday</strong> of each
-      month. Other events such as talks and dojos will be announced on the
-      <a href="http://mail.python.org/mailman/listinfo/glasgow">mailing
-      list</a>, <a href="https://twitter.com/pythonglasgow">twitter account</a>
-      and listed below.</p>
+      month. Usually. Events announced on the Meetup group.
+      <a href="meetup.com/Python-Glasgow/">Meetup group.</a>.
     </div>
 
     <div class="row events">
 
       <h3>What events are coming up?</h3>
 
-      {% if upcoming_events|count == 0 %}
-
-        <p>
-          There are no meetings arranged in the next 60 days. Send an email to
-          the <a href="http://mail.python.org/mailman/listinfo/glasgow">mailing
-          list</a> if you would like to propose or arrange an event!
-        </p>
-
-      {% elif upcoming_events|count == 1 %}
-
-        <p>{% if upcoming_events[0].metadata.link %}<a href="{{ upcoming_events[0].metadata['link'] }}">{% endif %}
-          The next meeting is a <strong>{{upcoming_events[0].title}}
-          </strong> on {{upcoming_events[0].date_string()}} in
-          <strong>{{upcoming_events[0].where}}</strong>.
-          {% if upcoming_events[0].metadata['link'] %}</a>{% endif %}
-        </p>
-
-      {% else %}
-
-        <p>
-          There are {{ upcoming_events|length }} events soon!
-        </p>
-
-        <ul>
-          {% for e in upcoming_events %}
-            <li>
-              {% if e.metadata.link %}<a href="{{ e.metadata['link'] }}">{% endif %}
-              <strong>{{e.title}}</strong> on {{e.date_string()}} in {{e.where}}
-              {% if e.metadata['link'] %}</a>{% endif %}
-            </li>
-          {% endfor %}
-        </ul>
-
-      {% endif %}
-
-      <p>
-        Our meetup calendar is syndicated as <a href="http://www.google.com/calendar/feeds/19d0eal34nt9boelm74n7p88vg@group.calendar.google.com/public/basic?futureevents=true">rss</a>
-        and <a href="https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics">ical</a>,
-        or you can go and have a <a href="https://www.google.com/calendar/embed?src=19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com&ctz=Europe/London&mode=AGENDA">look</a>.
-      </p>
+      See https://www.meetup.com/Python-Glasgow/ for our next event!
 
     </div>
 
@@ -68,12 +27,14 @@
 
     <div class="row sponsors">
 
+      <!--
       <div class="col-md-2 col-md-offset-3">
         <h4>Book Sponsor</h4>
         <a href="http://www.oreilly.com/">
             <img class="sponsors" src="http://www.oreilly.com/partner_file/orm_partner_meerkats_125x125.png" alt="O'Reilly kindly send us books now and then to give out at events" />
         </a>
       </div>
+      -->
 
       <!--
       <div class="col-md-2">
@@ -99,6 +60,13 @@
         </a>
       </div>
       -->
+
+      <div class="col-md-2">
+        <h4>Venue Sponsor</h4>
+        <a href="https://www.jpmorgan.com/">
+            <img class="sponsors" src="{{ url_for('static', filename='sponsor/jpm.gif') }}" alt="J.P. Morgan host Python Glasgow" />
+        </a>
+      </div>
 
     </div>
 
