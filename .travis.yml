@@ -17,4 +17,3 @@ deploy:
     secure: Kwq6mfjOlaIeh2gK1rHbWCaFydx9NLnfC+OASe477Em+WUWVuOhUF1odxZqzczkEEjkwcVCdHqfBb86ajX7WKe80mWzujDTRavisbCbDe1BrcofT7udaclfbFjh4bjECaEzxXkVag+mMFpJm6eiBZFYjhrcVS9rUR52cOCesgcc=
   on:
     repo: python-glasgow/pythonglasgow
-    condition: "$TOX_ENV = py35"
