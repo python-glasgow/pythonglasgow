@@ -20,8 +20,6 @@ try:
 except KeyError as e:
     warnings.warn("Missing mail settings.", UserWarning)
 
-ICAL = "https://www.google.com/calendar/ical/19d0eal34nt9boelm74n7p88vg%40group.calendar.google.com/public/basic.ics"  # NOQA
-
 _TWITTER = ['TWITTER_CONSUMER_KEY', 'TWITTER_ACCESS_TOKEN',
             'TWITTER_CONSUMER_SECRET', 'TWITTER_ACCESS_SECRET']
 if not all(i in environ for i in _TWITTER):
