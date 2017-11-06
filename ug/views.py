@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template
 
 from ug.util.cache import cached
-from ug.util.ical import upcoming_events
 
 mod = Blueprint('base', __name__)
 
@@ -9,13 +8,7 @@ mod = Blueprint('base', __name__)
 @mod.route('/')
 @cached(timeout=60 * 2)  # 2 mins
 def index():
-
-    events = upcoming_events()
-
-    return render_template(
-        'base/index.html',
-        upcoming_events=events,
-    )
+    return render_template('base/index.html')
 
 
 @mod.route('/code-of-conduct/')
