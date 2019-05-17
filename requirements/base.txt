@@ -1,7 +1,7 @@
 Flask-DebugToolbar==0.10.1
 Flask-Mail==0.9.1
 Flask-Script==2.0.6
-Flask==1.0.2
+Flask==1.0.3
 icalendar==4.0.3
 PyYAML==5.1
 requests==2.22.0
