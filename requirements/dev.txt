@@ -1,9 +1,0 @@
--r base.txt
-coverage
-flake8
-flask-webtest
-honcho
-ipython
-mock
-nose
-unittest2
